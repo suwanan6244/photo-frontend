@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import NavBar from "./navbar";
 
-export default class UserDetails extends Component {
+
+export default class Bank extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,11 +41,15 @@ export default class UserDetails extends Component {
   render() {
     return (
       <div>
-        Name<h1>{this.state.userData.username}</h1>
-        Email <h1>{this.state.userData.email}</h1><br>
+      <NavBar />
+      <div>
+        ข้อมูลบัญชีธนาคาร/พร้อมเพล์ <br>
         </br>
+       
         <button onClick={this.logOut} className="btn btn-primary">Log out</button>
       </div>
+      </div>
+
     );
   }
 }

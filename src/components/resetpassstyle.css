@@ -1,0 +1,68 @@
+.resetpass-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-image: url(./images/image5.jpg);
+    background-position: center;
+    background-size: cover;
+  }
+
+ 
+  
+  .resetpass-form {
+    width: 420px;
+    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    border-radius: 25px;
+    background-color: white;
+  }
+  
+  .resetpass-form-content {
+    padding-left: 12%;
+    padding-right: 12%;
+  }
+  
+  .resetpass-form-title {
+    text-align: center;
+    margin-bottom: 1em;
+    font-size: 26px;
+    color: rgb(34, 34, 34);
+    font-weight: 700;
+  }
+
+  .forgot-password a{
+    text-align: center;
+    text-decoration: none;
+    color: rgb(115, 115, 115);
+  }
+
+  .forgot-password a:hover{
+    text-decoration: underline;
+    color: rgb(0, 0, 0);
+    transition: 0.3s ease-in-out;
+  }
+ 
+  p{
+    text-align: right;
+  }
+
+  .submit button{
+    background-color: rgb(52, 52, 59); 
+    color: rgb(255, 255, 255); 
+    padding: 6px 135px;
+    border-radius: 15px;
+    border: none;
+
+
+  }
+
+  .submit button:hover {
+    background-color: #da5860;
+    color: rgb(255, 255, 255);
+    border-radius: 15px;
+    transition: 0.3s ease-in-out;
+    border: none;
+}

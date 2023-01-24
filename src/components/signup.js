@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import "./signin-signup_style.css";
+
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -21,7 +23,7 @@ export default class SignUp extends Component {
     e.preventDefault();
     const { username, fname, lname, email, password } = this.state;
     console.log(username, fname, lname, email, password);
-    fetch("http://localhost:5000/register", {
+    fetch("http://localhost:5000/signup", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -47,10 +49,10 @@ export default class SignUp extends Component {
             showConfirmButton: false,
             timer: 1000
           })
+          window.location.href = "./sigin";
+
           //alert("login successful");
-          window.localStorage.setItem("token", data.data);
-          window.localStorage.setItem("loggedIn", true);
-          window.location.href = "./userDetails";
+         
         } else {
           MySwal.fire({
             html: <strong>{data.status}</strong>,
@@ -67,68 +69,76 @@ export default class SignUp extends Component {
   }
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h1>Sign Up</h1>
-
-        <div className="mb-3">
-          <label>Username</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Username"
-            onChange={(e) => this.setState({ username: e.target.value })}
-          />
+      <div className="signup-form-container">
+        <div className="welcome-signup">
+        <h1>
+        Hello, Friend
+        </h1>
+        <h2 className="mt-3">
+        Enter your personal details and start journey with us        </h2>
         </div>
+      <form className="signup-form" onSubmit={this.handleSubmit}>
+        <div className="signup-form-content">
+          <h3 className="signup-form-title">Sign Up</h3>
+          
+          <div className="text-center">
+          Already registered? <a href="/signin">Sign In</a>
+          </div>
 
-        <div className="mb-3">
-          <label>First name</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="First name"
-            onChange={(e) => this.setState({ fname: e.target.value })}
-          />
-        </div>
+          <div className="form-group mt-3">
+            <label>UserName</label>
+            <input
+              type="text"
+              className="form-control mt-1"
+              placeholder="Username"
+              onChange={(e) => this.setState({ username: e.target.value })}            />
+          </div>
 
-        <div className="mb-3">
-          <label>Last name</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Last name"
-            onChange={(e) => this.setState({ lname: e.target.value })}
-          />
-        </div>
+          <div className="form-group mt-3">
+            <label>First name</label>
+            <input
+              type="text"
+              className="form-control mt-1"
+              placeholder="Firstname"
+              onChange={(e) => this.setState({ fname: e.target.value })}            />
+          </div>
 
-        <div className="mb-3">
-          <label>Email address</label>
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Enter email"
-            onChange={(e) => this.setState({ email: e.target.value })}
-          />
-        </div>
+          <div className="form-group mt-3">
+            <label>Last name</label>
+            <input
+              type="text"
+              className="form-control mt-1"
+              placeholder="Last name"
+              onChange={(e) => this.setState({ lname: e.target.value })}            />
+          </div>
 
-        <div className="mb-3">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter password"
-            onChange={(e) => this.setState({ password: e.target.value })}
-          />
-        </div>
+          <div className="form-group mt-3">
+            <label>Email address</label>
+            <input
+              type="email"
+              className="form-control mt-1"
+              placeholder="Enter email"
+              onChange={(e) => this.setState({ email: e.target.value })}            />
+          </div>
 
-        <div className="d-grid">
-          <button type="submit" className="btn btn-primary">
-            Sign Up
-          </button>
+          <div className="form-group mt-3">
+            <label>Password</label>
+            <input
+              type="password"
+              className="form-control mt-1"
+              placeholder="Enter password"
+              onChange={(e) => this.setState({ password: e.target.value })}            />
+          </div>
+
+          <div className="submit mt-3">
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
+          </div>
+
         </div>
-        <p className="forgot-password text-right">
-          Already registered <a href="/login">sign in?</a>
-        </p>
       </form>
+    </div>
     );
   }
 }

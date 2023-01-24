@@ -1,0 +1,15 @@
+.home{
+    display: flex;
+    align-items: center;
+    justify-self: space-between;
+    padding: 100px 100px;
+    
+  }
+  
+  .home h1{
+    font-family: FredokaOne-Regular;
+    src:url(./font/FredokaOne-Regular.ttf);
+    font-size: 3.5rem;
+    color: #000000;
+  
+  }

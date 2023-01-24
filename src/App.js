@@ -3,9 +3,12 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Login from "./components/login";
+import SignIn from "./components/signin";
 import SignUp from "./components/signup";
-import UserDetails from "./components/userDetails";
+import Home from "./components/home";
+import Bank from "./components/bank";
+import BankCreate from "./components/bank-create";
+
 import ResetPass from "./components/resetpass";
 
 
@@ -17,10 +20,13 @@ function App() {
         <div className="auth-wrapper">
           <div className="auth-inner">
             <Routes>
-              <Route exact path="/" element={isLoggedIn==="true" ? <UserDetails /> : <Login /> } />
-              <Route path="/login" element={<Login />} />
+              <Route exact path="/" element={isLoggedIn==="true" ? <Home /> : <SignIn /> } />
+              <Route path="/signin" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />
-              <Route path="/userDetails" element={<UserDetails />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/bank" element={<Bank />} />
+              <Route path="/bankcreate" element={<BankCreate />} />
+
               <Route path="/resetpass" element={<ResetPass />} />
 
               

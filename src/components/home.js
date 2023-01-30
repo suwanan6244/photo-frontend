@@ -31,7 +31,7 @@ export default class UserDetails extends Component {
         if(data.data === 'token expired'){
           alert("Token expired login again");
           window.localStorage.clear();
-          window.location.href = "/sigin";        }
+          window.location.href = "/signin";        }
       });
   }
 

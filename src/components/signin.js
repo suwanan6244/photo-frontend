@@ -99,13 +99,13 @@ export default class SignIn extends Component {
              <a href="/resetpass">Forgot Password</a>
           </p>
 
-          <div className="submit">
+          <div className="submit mt-2">
             <button type="submit" className="btn btn-primary">
               Submit
             </button>
           </div>
 
-          <p className= "text-center mt-4">
+          <p className= "text-center mt-2">
             Have not an account yet? <a href="/signup">Sign Up</a>
           </p>
           

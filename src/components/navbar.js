@@ -26,16 +26,14 @@ export default class Navbar extends Component {
         <path d="M36.6705 42.8416C42.8109 38.8239 46.8676 31.8858 46.8676 24C46.8676 16.1144 42.8109 9.17614 36.6705 5.15854C30.5904 
         9.17614 26.5735 16.1144 26.5735 24C26.5735 31.8858 30.5904 38.8239 36.6705 42.8416Z" class="ccompli2" fill="#5D2C02"></path> 
         </svg>
-        <a href="/home">
-         Photo Stock
-        </a>
+        <a href="/home">Photo Stock</a>
         </a>
 
         <div className="navbar">
           <ul className={this.state.clicked ? "navbar active" : "navbar"}>
             <li><a href="/home">Home</a></li>
             <li><a href="/bank">sell</a></li>
-            <li><a href="/home">upload</a></li>
+            <li><a href="/uploadimage">upload</a></li>
             <li><a href="/home">contact</a></li>
             <li><button onClick={this.logOut} className="btn btn-primary">Log out</button></li>
 

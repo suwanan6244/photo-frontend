@@ -10,6 +10,7 @@ import Bank from "./components/bank";
 import BankCreate from "./components/bank-create";
 
 import ResetPass from "./components/resetpass";
+import UploadImage from "./components/uploadimage";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/bank" element={<Bank />} />
               <Route path="/bankcreate" element={<BankCreate />} />
+              <Route path="/uploadimage" element={<UploadImage />} />
 
               <Route path="/resetpass" element={<ResetPass />} />
 

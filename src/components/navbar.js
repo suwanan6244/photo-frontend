@@ -32,10 +32,10 @@ export default class Navbar extends Component {
         <div className="navbar">
           <ul className={this.state.clicked ? "navbar active" : "navbar"}>
             <li><a href="/home">Home</a></li>
-            <li><a href="/bank">sell</a></li>
+            <li><a href="/home">Pricing</a></li>
             <li><a href="/uploadimage">upload</a></li>
-            <li><a href="/home">contact</a></li>
-            <li><button onClick={this.logOut} className="btn btn-primary">Log out</button></li>
+            <li><a href="/profile">profile</a></li>
+            <li><button type="submit" onClick={this.logOut} className="btn btn-primary">Log out</button></li>
 
           </ul>
 

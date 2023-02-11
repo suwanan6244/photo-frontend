@@ -77,7 +77,7 @@ export default class SignIn extends Component {
           <div className="form-group mt-3">
             <label>UserName</label>
             <input
-              type="username"
+              type="username" required
               className="form-control mt-1"
               placeholder="Enter username"
               onChange={(e) => this.setState({ username: e.target.value })}
@@ -88,7 +88,7 @@ export default class SignIn extends Component {
           <div className="form-group mt-3">
             <label>Password</label>
             <input
-              type="password"
+              type="password" required
               className="form-control mt-1"
               placeholder="Enter password"
               onChange={(e) => this.setState({ password: e.target.value })}

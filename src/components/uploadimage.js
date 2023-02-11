@@ -16,6 +16,11 @@ export default function UploadImage() {
   const [postDataLoading, setpostDataLoading] = useState(false);
   const [postDatas, setPostDatas] = useState();
   const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [countInStock, setCountInStock] = useState("");
+  const [description, setDescription] = useState("");
+
+  const [userData, setUserData] = useState("");
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -23,7 +28,7 @@ export default function UploadImage() {
       ? alert("Image require")
       : title.length < 3
       ? alert("title is too short")
-      : postData({ title, image, setPostDatas, setpostDataLoading });
+      : postData({ title, image, price, countInStock, description, setPostDatas, setpostDataLoading });
   };
 
   useEffect(() => {
@@ -31,18 +36,43 @@ export default function UploadImage() {
     if (postDatas) {
       setImage("");
       setTitle("");
+      setPrice("");
+      setDescription("");
+      setCountInStock("");
       getData({ setResult, setGetDataLoading });
     }
+    fetch("http://localhost:5000/userData", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        token: window.localStorage.getItem("token"),
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userData");
+        setUserData(data.data);
+        if (data.data === "token expired") {
+          alert("Token expired login again");
+          window.localStorage.clear();
+          window.location.href = "./signin";
+        }
+      });
   }, [postDatas]);
 
 
         return (
             <div>
             <NavBar />
-            <div className="bg-blue-50 px-4 flex-colo sm:px-0">
+            <div className="px-1 flex-colo sm:px-0">
             <form  
               onSubmit={submitHandler}
-              className="bg-blue-100 shadow-md rounded lg:w-2/5 md:w-3/5 w-full flex-colo py-12 px-4">
+              className="bg-pink-100 shadow-md rounded lg:w-2/5 md:w-3/5 w-full flex-colo py-11 px-4">
                 {image ? (
                     <img
                     src={image && image.filesUploaded[0].url}
@@ -53,7 +83,7 @@ export default function UploadImage() {
                     <button
                       onClick={() => (isPicker ? setIsPicker(false) : setIsPicker(true))}
                       type="button"
-                      className="w-full text-lg font-bold border-dashed h-56 border-4 border-blue-800 text-blue-800"
+                      className="w-full text-lg font-bold border-dashed h-56 border-4 border-gray-800 text-black-800"
                     >
                   Choose Image
                 </button>
@@ -63,21 +93,51 @@ export default function UploadImage() {
                 
 
                 {/* input title */}
+                <label>
+                      Title
+                </label>
                 <input 
+                  
                     type="text"
                     required
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="Image Title"
-                    className="w-full my-8 bg-white py-4 px-2 rounded border border-blue-800 text-blue-800 font-semibold"
+                    className="w-full my-3 bg-white py-2.5 px-2 rounded border border-black-800 text-black-800 font-semibold"
                     />
+                <input 
+                    type="number"
+                    required
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    placeholder="Price"
+                    min="1"
+                    className="w-full my-3 bg-white py-2.5 px-2 rounded border border-black-800 text-black-800 font-semibold"
+                    />
+                <input 
+                    type="number"
+                    required
+                    value={countInStock}
+                    onChange={(e) => setCountInStock(e.target.value)}
+                    placeholder="Count In Stock"
+                    min="1"
+                    className="w-full my-3 bg-white py-2.5 px-2 rounded border border-black-800 text-black-800 font-semibold"
+                    />
+                 <textarea
+                    required
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Description"
+                    className="w-full my-3 bg-white py-2.5 px-2 rounded border border-black-800 text-black-800 font-semibold"
+                    ></textarea>
+                    
 
                 {/* submit button */}
                 <button
                 type="submit"
-                className="w-full bg-blue-800 py-4 rounded text-white font-bold"
+                className="w-100 h-11 bg-gray-600 py-1 rounded text-white font-bold"
                 > 
-                 {postDataLoading ? "Loading..." : "SUBMIT"}
+                 {postDataLoading ? "Loading..." : "Publish now"}
                 </button>
 
                 {/* Filestack */}
@@ -89,8 +149,8 @@ export default function UploadImage() {
                       setImage(res);
                       setIsPicker(false);
                     }}
-                    onError ={(res) => alert(res)}
-                    pickerOptions={{
+                    pickerOptions={{ 
+                      fromSources: [ 'local_file_system'],
                       maxFiles: 1,
                       accept: ["image/*"],
                       errorsTimeout:2000,

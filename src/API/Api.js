@@ -17,9 +17,12 @@ export const postData = async ({
   setPostDatas,
   title,
   image,
+  price,
+  countInStock,
+  description,
 }) => {
   try {
-    const datas = { title, image: image.filesUploaded[0].url };
+    const datas = { countInStock, price, description, title, image: image.filesUploaded[0].url };
     setpostDataLoading(true);
     let res = await axios.post(`http://localhost:5000/image`, datas);
     if (res) {

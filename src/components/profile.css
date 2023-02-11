@@ -1,0 +1,39 @@
+.profile-form {
+    position: absolute;  
+    left: 100px; 
+    width: 500px;
+    margin-top: 100px;
+    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    background-color: white;
+  }
+
+  .profilebank-form {
+    position: absolute;  
+    right: 100px; 
+    width: 500px;
+    margin-top: 100px;
+    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    background-color: white;
+  }
+
+  .profilebank-form button{
+    background-color: rgb(52, 52, 59); 
+    color: rgb(255, 255, 255); 
+    padding: 6px 15px;
+    border-radius: 15px;
+    border: none;
+  }
+
+  .profilebank-form button:hover {
+    background-color: #da5860;
+    color: #ffffff;
+    border-radius: 15px;
+    transition: 0.3s ease-in-out;
+    border: none;
+}

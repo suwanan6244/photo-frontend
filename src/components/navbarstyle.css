@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #aca5f9;
+    background: #da5860;
     padding: 0 50px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
 }
@@ -77,7 +77,7 @@
         right: -300px;
         width: 300px;
         height: 100vh;
-        background: #d8bbbb;
+        background: #f58381;
         box-shadow: 0 40px 60px rgba(0, 0, 0, 0.1);
         padding: 20px 0 0 10px;
         transition: 0.3s ease-in-out;
@@ -100,4 +100,19 @@
         cursor: pointer;
     }
     
+}
+  .navbar li button{
+    background-color: rgb(52, 52, 59); 
+    color: rgb(255, 255, 255); 
+    padding: 6px 15px;
+    border-radius: 15px;
+    border: none;
+  }
+
+  .navbar li button:hover {
+    background-color: #ffffff;
+    color: #da5860;
+    border-radius: 15px;
+    transition: 0.3s ease-in-out;
+    border: none;
 }

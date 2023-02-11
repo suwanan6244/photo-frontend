@@ -1,17 +1,21 @@
-import React, { Component } from "react";
+import React, {  useEffect, useState } from "react";
+import "./uploadstyle.css";
 import NavBar from "./navbar";
-import "./homestyle.css";
+import GetDataImage from "./GetData-Image";
+import { getData } from "../API/Api";
 
 
 
-export default class UserDetails extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userData: "",
-    };
-  }
-  componentDidMount() {
+export default function UploadImage() {
+  const [result, setResult] = useState([]);
+  const [getDataLoading, setGetDataLoading] = useState(true);
+  const [postDatas] = useState();
+  const [userData, setUserData] = useState("");
+
+  
+
+  
+  useEffect(() => {
     fetch("http://localhost:5000/userData", {
       method: "POST",
       crossDomain: true,
@@ -27,25 +31,25 @@ export default class UserDetails extends Component {
       .then((res) => res.json())
       .then((data) => {
         console.log(data, "userData");
-        this.setState({ userData: data.data });
-        if(data.data === 'token expired'){
+        setUserData(data.data);
+        if (data.data === "token expired") {
           alert("Token expired login again");
           window.localStorage.clear();
-          window.location.href = "/signin";        }
+          window.location.href = "./signin";
+        }
       });
-  }
-
-  render() {
-    return (
-      <div>
-      <NavBar />
-      <div className="home">
-        <h1>
-          Photo Stock
-        </h1>        
-      </div>
-      </div>
-
-    );
-  }
+  
+    getData({ setResult, setGetDataLoading });
+    
+  }, [postDatas]);
+  
+        return (
+            <div>
+            <NavBar />
+              {getDataLoading}
+              <GetDataImage result={result} />
+          </div>
+        );
+    
 }
+

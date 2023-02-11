@@ -129,8 +129,6 @@
     padding: 6px 135px;
     border-radius: 15px;
     border: none;
-
-
   }
 
   .submit button:hover {
@@ -181,9 +179,18 @@
     color: rgb(34, 34, 34);
     font-weight: 700;
   }
+
+  .form-group small{
+    color:rgb(109, 109, 109);
+    font-size: 14px;
+}
+
   
   label {
     font-size: 18px;
     font-weight: 600;
     color: rgb(34, 34, 34);
   }
+
+
+ 

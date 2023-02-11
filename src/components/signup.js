@@ -49,7 +49,7 @@ export default class SignUp extends Component {
             showConfirmButton: false,
             timer: 1000
           })
-          window.location.href = "./sigin";
+          window.location.href = "./signin";
 
           //alert("login successful");
          
@@ -88,7 +88,7 @@ export default class SignUp extends Component {
           <div className="form-group mt-3">
             <label>UserName</label>
             <input
-              type="text"
+              type="text" required
               className="form-control mt-1"
               placeholder="Username"
               onChange={(e) => this.setState({ username: e.target.value })}            />
@@ -97,16 +97,17 @@ export default class SignUp extends Component {
           <div className="form-group mt-3">
             <label>First name</label>
             <input
-              type="text"
+              type="text" required
               className="form-control mt-1"
-              placeholder="Firstname"
+              placeholder="First name"
               onChange={(e) => this.setState({ fname: e.target.value })}            />
           </div>
+          
 
           <div className="form-group mt-3">
             <label>Last name</label>
             <input
-              type="text"
+              type="text" required
               className="form-control mt-1"
               placeholder="Last name"
               onChange={(e) => this.setState({ lname: e.target.value })}            />
@@ -115,16 +116,16 @@ export default class SignUp extends Component {
           <div className="form-group mt-3">
             <label>Email address</label>
             <input
-              type="email"
+              type="email" required
               className="form-control mt-1"
               placeholder="Enter email"
               onChange={(e) => this.setState({ email: e.target.value })}            />
           </div>
 
           <div className="form-group mt-3">
-            <label>Password</label>
+            <label>Password</label><small> (ระบุอย่างน้อย 8 ตัว)</small>
             <input
-              type="password"
+              type="password" required
               className="form-control mt-1"
               placeholder="Enter password"
               onChange={(e) => this.setState({ password: e.target.value })}            />

@@ -6,8 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignIn from "./components/signin";
 import SignUp from "./components/signup";
 import Home from "./components/home";
-import Bank from "./components/bank";
-import BankCreate from "./components/bank-create";
+import Profile from "./components/profile";
 
 import ResetPass from "./components/resetpass";
 import UploadImage from "./components/uploadimage";
@@ -25,8 +24,7 @@ function App() {
               <Route path="/signin" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/home" element={<Home />} />
-              <Route path="/bank" element={<Bank />} />
-              <Route path="/bankcreate" element={<BankCreate />} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="/uploadimage" element={<UploadImage />} />
 
               <Route path="/resetpass" element={<ResetPass />} />

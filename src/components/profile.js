@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import NavBar from "./navbar";
+import "./profile.css";
 
 
-export default class Bank extends Component {
+
+export default class UserDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,25 +31,24 @@ export default class Bank extends Component {
         if(data.data === 'token expired'){
           alert("Token expired login again");
           window.localStorage.clear();
-          window.location.href = "/login";        }
+          window.location.href = "/signin";        }
       });
   }
-
-  logOut = () => {
-    window.localStorage.clear();
-    window.location.href = "/login";
-  };
 
   render() {
     return (
       <div>
       <NavBar />
-      <div>
-        ข้อมูลบัญชีธนาคาร/พร้อมเพล์ <br>
-        </br>
-       
-        <button onClick={this.logOut} className="btn btn-primary">Log out</button>
-      </div>
+      <form className="profile-form">
+        <h1>
+        ข้อมูลส่วนตัว
+        </h1>   
+        ชื่อผู้ใช้: {this.state.userData.username}  <br /> 
+        ชื่อ: {this.state.userData.fname}  <br />   
+        นามสกุล: {this.state.userData.lname}    <br />
+        Email : {this.state.userData.email}    <br />
+      </form>
+      
       </div>
 
     );

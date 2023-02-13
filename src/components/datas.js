@@ -1,36 +1,21 @@
 const ImagesData = [
-    {
-      image: "./images/image1.jpg",
-      title: "Lorem Ipsum is simply dummy text of",
-    },
-    {
-      image: "/./images/image2.jpg",
-      title: "the 1500s, when an unknown prin",
-    },
-    {
-      image: "./images/image3.jpg",
-      title: "Lorem Ipsum is simply dummy text of",
-    },
-    {
-      image: "./images/image4.jpg",
-      title: "the 1500s, when an unknown prin",
-    },
-    {
-      image: "./images/image5.jpg",
-      title: "the 1500s, when an unknown prin",
-    },
-    {
-      image: "./images/image5.jpg",
-      title: "Lorem Ipsum is simply dummy text of",
-    },
-    {
-      image: "./images/image5.jpg",
-      title: "the 1500s, when an unknown prin",
-    },
-    {
-      image: "./images/image5.jpg",
-      title: "the 1500s, when an unknown prin",
-    },
-  ];
+  {
+    _id: "63e740f5967f51fb87eaf88e",
+    title: "Sky",
+    image: "/images/image1.jpg",
+    price: 20,
+    countInStock: 2,
+    description: "ภูเขา",
+  },
+  {
+    _id: "2",
+    title: "yyyyy",
+    image: "/images/image2.jpg",
+    price: 5,
+    countInStock: 2,
+    description: "swwwwww",
+  },
+  
+];
   
   export default ImagesData;

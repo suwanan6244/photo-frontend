@@ -1,47 +1,41 @@
 import React, { useState } from "react";
 //import ImagesData from "./datas";
 import "./uploadstyle.css";
-import CloseIcon from '@mui/icons-material/Close';
+import { Link } from "react-router-dom";
+
 
 
 
 function GetDataImage({ result }) {  
 
-    const [model, setModel] = useState(false);
-    const [tempimage, setTempImage] = useState('');
-    const getImg = (image) =>{
-        setTempImage(image);
-        setModel(true);
-    }
         return (
             <>
-            <div className={model ? "model open" : "model"}>
-                <img 
-                    src={tempimage} 
-                    alt={''}/>
-                    <CloseIcon onClick={() => setModel(false)} />
-
-            </div>
-            <div className="gallery grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 container mx-auto gap-10 my-12">
-                { result.map((i, index) => (
+            
+            <div className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 container mx-auto gap-10 my-12">
+                { result.map((image) => (
 
                         <div 
-                            key={index}  
-                            className="pics p-2 bg-white rounded border border-black-400"
-                            onClick={() => getImg(i.image)}
+                            key={image._id}  
+                            className="p-2 bg-white rounded border border-black-400"
                             >
                            
                             <img
                                 className="w-full h-64 object-cover"
-                                src={i.image}
-                                alt={i.title}
+                                src={image.image}
+                                alt={image.title}
                             />  
                             <h1 className="font-semibold text-black-800  my-2 leading-8"> 
-                                {i.title}<br/>
-                                ${i.price}
+                               <a href={`/image/${image._id}`}> {image.title}<br/>
+                                ${image.price}</a>
                             </h1> {/* แสดงคำอธิบายข้างล่าง */}
-                           
-
+                            <Link to={`/image/${image._id}`}>
+                            <button type="submit" className="btn btn-primary">
+                                view
+                            </button>
+                            <button type="submit" className="btn btn-primary">
+                                view
+                            </button>
+                            </Link>
                             </div>
             ))}
             </div>

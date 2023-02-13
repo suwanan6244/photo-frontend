@@ -9,7 +9,6 @@ import { getData } from "../API/Api";
 export default function UploadImage() {
   const [result, setResult] = useState([]);
   const [getDataLoading, setGetDataLoading] = useState(true);
-  const [postDatas] = useState();
   const [userData, setUserData] = useState("");
 
   
@@ -41,7 +40,7 @@ export default function UploadImage() {
   
     getData({ setResult, setGetDataLoading });
     
-  }, [postDatas]);
+  }, []);
   
         return (
             <div>

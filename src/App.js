@@ -7,9 +7,14 @@ import SignIn from "./components/signin";
 import SignUp from "./components/signup";
 import Home from "./components/home";
 import Profile from "./components/profile";
-
 import ResetPass from "./components/resetpass";
 import UploadImage from "./components/uploadimage";
+import Test from "./components/test";
+import TestAPI from "./components/testAPI";
+import TestWatermark from "./components/PreviewWatermark";
+
+import SingleImage from "./components/SingleImage";
+import SingleImageCopy from "./components/SingleImage copy";
 
 
 function App() {
@@ -26,8 +31,14 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/uploadimage" element={<UploadImage />} />
-
               <Route path="/resetpass" element={<ResetPass />} />
+              <Route path="/test" element={<Test />} />
+              <Route path="/testapi" element={<TestAPI />} />
+
+              <Route path="/image/:id" element={<SingleImage />} />
+              <Route path="/imageapi/:id" element={<SingleImageCopy />} />
+              <Route path="/testwatermark" element={<TestWatermark />} />
+
 
               
             </Routes>

@@ -72,7 +72,7 @@ export default function UploadImage() {
             <div className="px-1 flex-colo sm:px-0">
             <form  
               onSubmit={submitHandler}
-              className="bg-pink-100 shadow-md rounded lg:w-2/5 md:w-3/5 w-full flex-colo py-11 px-4">
+              className="bg-pink-100 shadow-md rounded lg:w-2/5 md:w-3/5 w-full flex-colo py-4 px-4">
                 {image ? (
                     <img
                     src={image && image.filesUploaded[0].url}
@@ -83,7 +83,7 @@ export default function UploadImage() {
                     <button
                       onClick={() => (isPicker ? setIsPicker(false) : setIsPicker(true))}
                       type="button"
-                      className="w-full text-lg font-bold border-dashed h-56 border-4 border-gray-800 text-black-800"
+                      className="w-full my-3 text-lg font-bold border-dashed h-56 border-4 border-gray-800 text-black-800"
                     >
                   Choose Image
                 </button>
@@ -93,9 +93,6 @@ export default function UploadImage() {
                 
 
                 {/* input title */}
-                <label>
-                      Title
-                </label>
                 <input 
                   
                     type="text"
@@ -103,7 +100,7 @@ export default function UploadImage() {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="Image Title"
-                    className="w-full my-3 bg-white py-2.5 px-2 rounded border border-black-800 text-black-800 font-semibold"
+                    className="w-full my-2 bg-white py-2.5 px-2 rounded border border-black-800 text-black-800 font-semibold"
                     />
                 <input 
                     type="number"
@@ -112,7 +109,7 @@ export default function UploadImage() {
                     onChange={(e) => setPrice(e.target.value)}
                     placeholder="Price"
                     min="1"
-                    className="w-full my-3 bg-white py-2.5 px-2 rounded border border-black-800 text-black-800 font-semibold"
+                    className="w-full my-2 bg-white py-2.5 px-2 rounded border border-black-800 text-black-800 font-semibold"
                     />
                 <input 
                     type="number"
@@ -121,21 +118,21 @@ export default function UploadImage() {
                     onChange={(e) => setCountInStock(e.target.value)}
                     placeholder="Count In Stock"
                     min="1"
-                    className="w-full my-3 bg-white py-2.5 px-2 rounded border border-black-800 text-black-800 font-semibold"
+                    className="w-full my-2 bg-white py-2.5 px-2 rounded border border-black-800 text-black-800 font-semibold"
                     />
                  <textarea
                     required
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Description"
-                    className="w-full my-3 bg-white py-2.5 px-2 rounded border border-black-800 text-black-800 font-semibold"
+                    className="w-full my-2 bg-white py-2.5 px-2 rounded border border-black-800 text-black-800 font-semibold"
                     ></textarea>
                     
 
                 {/* submit button */}
                 <button
                 type="submit"
-                className="w-100 h-11 bg-gray-600 py-1 rounded text-white font-bold"
+                className="w-100 my-2 h-11 bg-gray-600 py-1 rounded text-white font-bold"
                 > 
                  {postDataLoading ? "Loading..." : "Publish now"}
                 </button>

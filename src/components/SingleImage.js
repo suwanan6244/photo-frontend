@@ -2,25 +2,23 @@
 import React, {  useEffect, useState } from "react";
 import NavBar from "./navbar";
 import { useParams } from "react-router-dom";
-import GetDataImage from "./GetData-Image";
 //import ImagesData from "./datas";
 import "./SingleImagestyle.css";
 
 
-function SingleImage({ match }) {
-  
+const SingleImage = () => { 
+  const { id } = useParams(); 
+  const [product, setProduct] = useState({});   
 
-  const [items, setItems] = useState([]);
-    useEffect(() => {
-        fetch("http://localhost:5000/allimage/")
-          .then(res => res.json())
-          .then(
-            (result) => {
-              setItems(result);
-            },
-           
-          )
-      }, [])
+  useEffect(() => {
+    const fetchData = async () => {
+    const response = await fetch(`http://localhost:5000/allimage/${id}`);
+    const product = await response.json();
+    setProduct(product);
+  };
+  fetchData();
+}, [id]);
+
   return (
     <div>
     <NavBar />
@@ -28,36 +26,36 @@ function SingleImage({ match }) {
         <div className="row">
           <div className="col-md-6">
             <div className="single-image">
-              <img src={items.image} alt={items.title} />
+              <img src={product.image} alt={product.title} />
             </div>
           </div>
           <div className="col-md-6">
             <div className="product-dtl">
               <div className="product-info">
-                <div className="product-name">{items.title}</div>
-                <div className="product-description">{items.description}</div>
+                <div className="product-name">{product.title}</div>
+                <div className="product-description">{product.description}</div>
               </div>
 
               <div className="product-count col-lg-7 ">
                 <div className="flex-box d-flex justify-content-between align-items-center">
                   <h6>Price</h6>
-                  <span>${items.price}</span>
+                  <span>${product.price}</span>
                 </div>
                 <div className="flex-box d-flex justify-content-between align-items-center">
                   <h6>Status</h6>
-                  {items.countInStock > 0 ? (
+                  {product.countInStock > 0 ? (
                     <span>In Stock</span>
                   ) : (
                     <span>unavailable</span>
                   )}
                 </div>
                 
-                {items.countInStock > 0 ? (
+                {product.countInStock > 0 ? (
                   <>
                     <div className="flex-box d-flex justify-content-between align-items-center">
                       <h6>Quantity</h6>
                       <select>
-                        {[...Array(items.countInStock).keys()].map((x) => (
+                        {[...Array(product.countInStock).keys()].map((x) => (
                           <option key={x + 1} value={x + 1}>
                             {x + 1}
                           </option>

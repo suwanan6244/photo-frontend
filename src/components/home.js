@@ -1,54 +1,56 @@
 import React, {  useEffect, useState } from "react";
-import "./uploadstyle.css";
+//import ImagesData from "./datas";
 import NavBar from "./navbar";
-import GetDataImage from "./GetData-Image";
-import { getData } from "../API/Api";
+import { Link } from "react-router-dom";
 
 
 
-export default function UploadImage() {
-  const [result, setResult] = useState([]);
-  const [getDataLoading, setGetDataLoading] = useState(true);
-  const [userData, setUserData] = useState("");
 
-  
-
-  
-  useEffect(() => {
-    fetch("http://localhost:5000/userData", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        token: window.localStorage.getItem("token"),
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data, "userData");
-        setUserData(data.data);
-        if (data.data === "token expired") {
-          alert("Token expired login again");
-          window.localStorage.clear();
-          window.location.href = "./signin";
-        }
-      });
-  
-    getData({ setResult, setGetDataLoading });
-    
-  }, []);
-  
+export default function TestAPI() {
+    const [items, setItems] = useState([]);
+    useEffect(() => {
+        fetch("http://localhost:5000/allimage")
+          .then(res => res.json())
+          .then(
+            (result) => {
+              setItems(result);
+            },
+           
+          )
+      }, [])
         return (
             <div>
-            <NavBar />
-              {getDataLoading}
-              <GetDataImage result={result} />
-          </div>
-        );
-    
+                <NavBar />
+                <div className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 container mx-auto gap-10 my-12">
+                {items.map((product) => (
+                  <div
+                  className="p-2 bg-white rounded border border-black-400"
+                  key={product._id}
+                  >
+                          <img 
+                            className="w-full h-64 object-cover"
+                            src={product.image} 
+                            alt={product.title} />
+
+                          <h1 className="font-semibold text-black-800  my-2 leading-8"> 
+                               <a href={`/image/${product._id}`}> {product.title}<br/>
+                                ${product.price}</a>
+                          </h1> {/* แสดงคำอธิบายข้างล่าง */}
+                          
+                        <Link to={`/image/${product._id}`}>
+                            <button type="submit" className="btn btn-primary">
+                                view
+                            </button>
+                            <button type="submit" className="btn btn-primary">
+                                view
+                            </button>
+                            </Link>
+                      
+                    </div>
+                ))}
+             
+      </div>
+            </div>
+  );
 }
 

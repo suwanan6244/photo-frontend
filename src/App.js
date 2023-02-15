@@ -9,9 +9,9 @@ import Home from "./components/home";
 import Profile from "./components/profile";
 import ResetPass from "./components/resetpass";
 import UploadImage from "./components/uploadimage";
-import Test from "./components/test";
 import TestAPI from "./components/testAPI";
 import TestWatermark from "./components/PreviewWatermark";
+import Cart from "./components/cart";
 
 import SingleImage from "./components/SingleImage";
 import SingleImageCopy from "./components/SingleImage copy";
@@ -30,9 +30,9 @@ function App() {
               <Route path="/signup" element={<SignUp />} />
               <Route path="/home" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/cart" element={<Cart />} />
               <Route path="/uploadimage" element={<UploadImage />} />
               <Route path="/resetpass" element={<ResetPass />} />
-              <Route path="/test" element={<Test />} />
               <Route path="/testapi" element={<TestAPI />} />
 
               <Route path="/image/:id" element={<SingleImage />} />

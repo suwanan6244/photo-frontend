@@ -1,33 +1,33 @@
-import React, { useState } from "react";
-import Navbar from "./navbar";
+import React, { useState } from 'react';
 
-const PreviewWatermark = () => {
-  const [preview, setPreview] = useState("");
-  const [result, setResult] = useState("");
+function PreviewWatermark() {
+  const [image, setImage] = useState(null);
+  const [watermarkImage, setWatermarkImage] = useState(null);
 
-  const handleUpload = async (e) => {
-    const file = e.target.files[0];
+  const handleFileUpload = (event) => {
+    setImage(event.target.files[0]);
+  };
+
+  const handleUpload = async () => {
     const formData = new FormData();
-    formData.append("file", file);
-    const response = await fetch("http://localhost:5000/checkWatermark", {
-      method: "POST",
+    formData.append('image', image);
+    const response = await fetch('http://localhost:5000/uploadimage', {
+      method: 'POST',
       body: formData,
-      
-
     });
-    const verificationResult = await response.text();
-    setResult(verificationResult);
-    setPreview(URL.createObjectURL(file));
+    const result = await response.json();
+    setWatermarkImage(result.watermark);
   };
 
   return (
     <div>
-        <Navbar />
-      <input type="file" onChange={handleUpload} />
-      <p>{result}</p>
-      <img src={preview} alt="Watermarked image preview" />
+      <input type="file" onChange={handleFileUpload} />
+      <button onClick={handleUpload}>Upload</button>
+      {watermarkImage && (
+        <img src={watermarkImage} alt="Watermark" />
+      )}
     </div>
   );
-};
+}
 
 export default PreviewWatermark;

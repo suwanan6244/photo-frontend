@@ -21,24 +21,22 @@ export default function TestAPI() {
         return (
             <div>
                 <NavBar />
-                <div className="container">
-        <div className="section">
-          <div className="row">
-            <div className="col-lg-12 col-md-12 article">
-              <div className="shopcontainer row">
+                <div className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 container mx-auto gap-10 my-12">
                 {items.map((product) => (
                   <div
-                    className="shop col-lg-4 col-md-6 col-sm-6"
-                    key={product._id}
+                  className="p-2 bg-white rounded border border-black-400"
+                  key={product._id}
                   >
-                    <div className="border-product">
-                        <div className="shopBack">
-                          <img src={product.image} alt={product.title} />
-                        </div>
+                          <img 
+                            className="w-full h-64 object-cover"
+                            src={product.image} 
+                            alt={product.title} />
 
-                      <div className="shoptext">
-                      <h3>{product.title}</h3>
-                        <h3>${product.price}</h3>
+                          <h1 className="font-semibold text-black-800  my-2 leading-8"> 
+                               <a href={`/image/${product._id}`}> {product.title}<br/>
+                                ${product.price}</a>
+                          </h1> {/* แสดงคำอธิบายข้างล่าง */}
+                          
                         <Link to={`/image/${product._id}`}>
                             <button type="submit" className="btn btn-primary">
                                 view
@@ -47,14 +45,10 @@ export default function TestAPI() {
                                 view
                             </button>
                             </Link>
-                      </div>
+                      
                     </div>
-                  </div>
                 ))}
-              </div>
-            </div>
-          </div>
-        </div>
+             
       </div>
             </div>
   );

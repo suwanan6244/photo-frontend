@@ -1,33 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function PreviewWatermark() {
-  const [image, setImage] = useState(null);
-  const [watermarkImage, setWatermarkImage] = useState(null);
+const WatermarkedImage = ({ id }) => {
+  const [watermarkedImage, setWatermarkedImage] = useState(null);
 
-  const handleFileUpload = (event) => {
-    setImage(event.target.files[0]);
-  };
-
-  const handleUpload = async () => {
-    const formData = new FormData();
-    formData.append('image', image);
-    const response = await fetch('http://localhost:5000/uploadimage', {
-      method: 'POST',
-      body: formData,
-    });
-    const result = await response.json();
-    setWatermarkImage(result.watermark);
-  };
+  useEffect(() => {
+    fetch(`/api/watermarked-images/${id}`)
+      .then((response) => response.blob())
+      .then((data) => {
+        const url = window.URL.createObjectURL(data);
+        setWatermarkedImage(url);
+      })
+      .catch((error) => console.log(error));
+  }, [id]);
 
   return (
     <div>
-      <input type="file" onChange={handleFileUpload} />
-      <button onClick={handleUpload}>Upload</button>
-      {watermarkImage && (
-        <img src={watermarkImage} alt="Watermark" />
+      {watermarkedImage && (
+        <div>
+          <img src={watermarkedImage} alt="Watermarked" />
+          <a href={watermarkedImage} download>
+            Download Watermarked Image
+          </a>
+        </div>
       )}
     </div>
   );
-}
+};
 
-export default PreviewWatermark;
+export default WatermarkedImage;

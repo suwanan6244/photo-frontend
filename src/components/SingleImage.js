@@ -1,27 +1,52 @@
-
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "./navbar";
 import { useParams } from "react-router-dom";
-//import ImagesData from "./datas";
 import "./SingleImagestyle.css";
 
-
-const SingleImage = () => { 
-  const { id } = useParams(); 
-  const [product, setProduct] = useState({});   
+const SingleImage = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
+    const storedUserId = window.localStorage.getItem("userId");
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+
     const fetchData = async () => {
-    const response = await fetch(`http://localhost:5000/allimage/${id}`);
-    const product = await response.json();
-    setProduct(product);
+      const response = await fetch(`http://localhost:5000/allimage/${id}`);
+      const product = await response.json();
+      setProduct(product);
+    };
+    fetchData();
+  }, [id]);
+
+  const handleAddToCart = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/cart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userId,
+          productId: product._id,
+          quantity,
+        }),
+      });
+      const data = await response.json();
+      alert(data.message);
+    } catch (error) {
+      console.log(error);
+      alert("Error adding product to cart");
+    }
   };
-  fetchData();
-}, [id]);
 
   return (
     <div>
-    <NavBar />
+      <NavBar />
       <div className="container single-product">
         <div className="row">
           <div className="col-md-6">
@@ -49,12 +74,15 @@ const SingleImage = () => {
                     <span>unavailable</span>
                   )}
                 </div>
-                
+
                 {product.countInStock > 0 ? (
                   <>
                     <div className="flex-box d-flex justify-content-between align-items-center">
                       <h6>Quantity</h6>
-                      <select>
+                      <select
+                        value={quantity}
+                        onChange={(e) => setQuantity(e.target.value)}
+                      >
                         {[...Array(product.countInStock).keys()].map((x) => (
                           <option key={x + 1} value={x + 1}>
                             {x + 1}
@@ -62,17 +90,18 @@ const SingleImage = () => {
                         ))}
                       </select>
                     </div>
-                    <button className="round-black-btn">Add To Cart</button>
+                    <button className="round-black-btn" onClick={handleAddToCart}>
+                      Add To Cart
+                    </button>
                   </>
                 ) : null}
               </div>
             </div>
           </div>
         </div>
-
-        </div>
-        </div>
-  )
-}
+      </div>
+    </div>
+  );
+};
 
 export default SingleImage;

@@ -47,6 +47,7 @@ export default class SignIn extends Component {
           })
           //alert("login successful");
           window.localStorage.setItem("token", data.data);
+          window.localStorage.setItem("userId", data.userId);
           window.localStorage.setItem("loggedIn", true);
           window.location.href = "./home";
         } else {

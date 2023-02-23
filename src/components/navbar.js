@@ -32,11 +32,16 @@ export default class Navbar extends Component {
         <div className="navbar">
           <ul className={this.state.clicked ? "navbar active" : "navbar"}>
             <li><a href="/home">Home</a></li>
-            <li><a href="/testapi">TestAPI</a></li>
             <li><a href="/uploadimage">upload</a></li>
             <li><a href="/testwatermark">TestWatermark</a></li>
+            <li><a href="/extract-watermark">ExtractWatermark</a></li>
             <li><a href="/profile">profile</a></li>
-            <li><a href="/cart">cart</a></li>
+            <li>
+          <a href="/cart">
+            <i className="fas fa-shopping-cart"></i>
+            {this.state.cartCount > 0 && <span className="badge">{this.state.cartCount}</span>}
+          </a>
+        </li>
 
             <li><button type="submit" onClick={this.logOut} className="btn btn-primary">Log out</button></li>
            

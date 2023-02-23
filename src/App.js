@@ -9,7 +9,7 @@ import Home from "./components/home";
 import Profile from "./components/profile";
 import ResetPass from "./components/resetpass";
 import UploadImage from "./components/uploadimage";
-import TestAPI from "./components/testAPI";
+import ExtractWatermark from "./components/ExtractWatermark";
 import TestWatermark from "./components/PreviewWatermark";
 import Cart from "./components/cart";
 
@@ -33,7 +33,7 @@ function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/uploadimage" element={<UploadImage />} />
               <Route path="/resetpass" element={<ResetPass />} />
-              <Route path="/testapi" element={<TestAPI />} />
+              <Route path="/extract-watermark" element={<ExtractWatermark />} />
 
               <Route path="/image/:id" element={<SingleImage />} />
               <Route path="/imageapi/:id" element={<SingleImageCopy />} />

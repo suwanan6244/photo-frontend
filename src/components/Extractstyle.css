@@ -1,0 +1,18 @@
+.extract-image {
+    background-color: #f3fbf7;
+    margin-right: 20px;
+    margin-left: 50px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .extract2-image {
+    background-color: #f3fbf7;
+    margin-right: 100px;
+    margin-left: 60px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

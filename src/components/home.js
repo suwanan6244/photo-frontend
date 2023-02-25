@@ -50,7 +50,7 @@ const Home = () => {
           >
             <img
               className="w-full h-64 object-cover"
-              src={product.image}
+              src={`http://localhost:5000/uploads/${product.image}`}
               alt={product.title}
             />
             <h1 className="font-semibold text-black-800  my-2 leading-8">

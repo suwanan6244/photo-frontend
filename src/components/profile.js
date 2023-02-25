@@ -41,11 +41,11 @@ export default class UserDetails extends Component {
       <NavBar />
       <form className="profile-form">
         <h1>
-        ข้อมูลส่วนตัว
+        Account
         </h1>   
-        ชื่อผู้ใช้: {this.state.userData.username}  <br /> 
-        ชื่อ: {this.state.userData.fname}  <br />   
-        นามสกุล: {this.state.userData.lname}    <br />
+        Username: {this.state.userData.username}  <br /> 
+        FirstName: {this.state.userData.fname}  <br />   
+        LastName: {this.state.userData.lname}    <br />
         Email : {this.state.userData.email}    <br />
       </form>
       

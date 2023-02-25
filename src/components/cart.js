@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import NavBar from "./navbar";
-import "./profile.css";
 
 export default class Cart extends Component {
   constructor(props) {
@@ -14,7 +13,6 @@ export default class Cart extends Component {
   componentDidMount() {
     const storedUserId = window.localStorage.getItem("userId");
     const userId = storedUserId ? storedUserId : this.props.userId;
-
     fetch(`http://localhost:5000/cart/${userId}`)
       .then((res) => res.json())
       .then((data) => {
@@ -32,7 +30,6 @@ export default class Cart extends Component {
   handleDelete = (itemId) => {
     const storedUserId = window.localStorage.getItem("userId");
     const userId = storedUserId ? storedUserId : this.props.userId;
-
     fetch(`http://localhost:5000/cart/${userId}/${itemId}`, {
       method: "DELETE",
     })
@@ -57,27 +54,33 @@ export default class Cart extends Component {
     const { cartItems, totalAmount } = this.state;
     return (
       <div>
-        <NavBar cartCount={cartItems.length} />
-        <form className="profile-form">
-          <h1>ข้อมูลในตะกร้าสินค้า</h1>
-          <br />
-          <table className="table">
+        <NavBar />
+        <div className="container mt-4">
+          <h1>Shopping Cart</h1>
+          <table className="table table-bordered mt-4">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Product Name</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col"></th> 
+                <th>Image</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {cartItems.map((item, index) => (
+              {cartItems.map((item) => (
                 <tr key={item._id}>
-                  <th scope="row">{index + 1}</th>
+                  <td>
+                    <img
+                      src={`http://localhost:5000/uploads/${item.productId.image}`}
+                    alt={item.productId.title}
+                    style={{ width: "50px" }}/>
+                  </td>
                   <td>{item.productId.title}</td>
                   <td>{item.productId.price}</td>
                   <td>{item.quantity}</td>
+                  <td>{item.productId.price * item.quantity}</td>
                   <td>
                     <button
                       className="btn btn-danger"
@@ -88,12 +91,17 @@ export default class Cart extends Component {
                   </td>
                 </tr>
               ))}
+              <tr>
+                <td colSpan="4" align="right">
+                  Total:
+                </td>
+                <td>{totalAmount}</td>
+              </tr>
             </tbody>
           </table>
-          <div>Total amount: {totalAmount}</div>
-          <button className="btn btn-primary">ชำระเงิน</button>
-        </form>
+        </div>
       </div>
     );
   }
 }
+

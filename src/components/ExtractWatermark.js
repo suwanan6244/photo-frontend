@@ -3,7 +3,7 @@ import NavBar from "./navbar";
 import "./Extractstyle.css";
 
 
-function TestAPI() {
+function ExtractWatermark() {
   const [image, setImage] = useState(null);
   const [watermark, setWatermark] = useState(null);
 
@@ -34,16 +34,19 @@ function TestAPI() {
       <input type="file" accept="image/*" onChange={handleImageChange} />
       <div className="row">
         <div className="col-md-6">
-          <div className="extract-image">
+          <div className="extract-image w-full my-3 mx-4 border-dashed border-4 border-gray-800 flex items-center justify-center">
             {image && <img src={URL.createObjectURL(image)} alt="Select Image" />}
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="extract2-image">
+            {watermark && <img src={watermark} alt="Extracted Watermark" />}
           </div>
         </div>
       </div>
       <button onClick={handleExtractWatermark}>Extract Watermark</button>
-      
-      {watermark && <img src={watermark} alt="Extracted Watermark" />}
     </div>
   );
 }
 
-export default TestAPI;
+export default ExtractWatermark;

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import NavBar from "./navbar";
+import StripeCheckout from 'react-stripe-checkout';
+
 
 export default class Cart extends Component {
   constructor(props) {
@@ -50,6 +52,37 @@ export default class Cart extends Component {
       });
   };
 
+  handleToken = async (token) => {
+    const storedUserId = window.localStorage.getItem("userId");
+    const userId = storedUserId ? storedUserId : this.props.userId;
+    const { cartItems, totalAmount } = this.state;
+
+    // Send a POST request to the server to checkout the cart
+    const response = await fetch(`http://localhost:5000/checkout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+        cartItems,
+        totalAmount,
+        stripeTokenId: token.id,
+      }),
+    });
+
+    if (response.ok) {
+      // Clear the cart items list after successful checkout
+      this.setState({ cartItems: [], totalAmount: 0 });
+      alert("Checkout successful!");
+    } else {
+      const error = await response.json();
+      alert(`Checkout failed: ${error.msg}`);
+    }
+  };
+
+
+
   render() {
     const { cartItems, totalAmount } = this.state;
     return (
@@ -97,11 +130,20 @@ export default class Cart extends Component {
                 </td>
                 <td>{totalAmount}</td>
                 <td>
-                  <button
-                    className="btn btn-primary"
+                  <StripeCheckout
+                    stripeKey="pk_test_51MfJMuCa6p7Qb3lSI4El6ex4VRWPv4W5hkSeD6Fa5amibfS1fM828fBbtEEHT1xbBru3OcCZo7HvDjovlG1b4ybC003WbPNoG0"
+                    token={this.handleToken}
+                    name="Shopping Cart"
+                    amount={totalAmount * 100}
+                    currency="USD"
+                    billingAddress
+                    shippingAddress
                   >
-                    ชำระเงิน
-                  </button>
+                    <button className="btn btn-primary">
+                      Checkout
+                    </button>
+                  </StripeCheckout>
+
                 </td>
               </tr>
             </tbody>

@@ -31,8 +31,8 @@ export default class Cart extends Component {
 
   handleDelete = (itemId) => {
     const storedUserId = window.localStorage.getItem("userId");
-    const userId = storedUserId ? storedUserId : this.props.userId;
-    fetch(`http://localhost:5000/cart/${userId}/${itemId}`, {
+    const buyerId = storedUserId ? storedUserId : this.props.userId;
+    fetch(`http://localhost:5000/cart/${buyerId}/${itemId}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
@@ -54,7 +54,7 @@ export default class Cart extends Component {
 
   handleToken = async (token) => {
     const storedUserId = window.localStorage.getItem("userId");
-    const userId = storedUserId ? storedUserId : this.props.userId;
+    const buyerId = storedUserId ? storedUserId : this.props.userId;
     const { cartItems, totalAmount } = this.state;
 
     // Send a POST request to the server to checkout the cart
@@ -64,7 +64,7 @@ export default class Cart extends Component {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userId,
+        buyerId,
         cartItems,
         totalAmount,
         stripeTokenId: token.id,

@@ -31,7 +31,7 @@ const SingleImage = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: userId,
+          buyerId: userId,
           productId: product._id,
           quantity,
         }),

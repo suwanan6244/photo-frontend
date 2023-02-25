@@ -27,7 +27,7 @@ const Home = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: userId,
+          buyerId: userId,
           productId: productId,
           quantity: 1, // Default quantity is 1
         }),

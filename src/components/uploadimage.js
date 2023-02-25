@@ -59,6 +59,7 @@ export default function UploadImage() {
       if (response.ok) {
         const newImage = await response.json();
         setPostDatas(newImage);
+        window.location.href = "./uploadimage";
         alert('Upload completed');
       } else {
         throw new Error('Invalid Data');
@@ -67,7 +68,32 @@ export default function UploadImage() {
       alert(error.message);
     }
   };
-  
+  const deleteHandler = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:5000/image/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sellerId: userId,
+        }),
+      });
+
+      if (response.ok) {
+        // Remove the deleted image from the items list
+        setItems(items.filter((item) => item._id !== id));
+        alert("Image deleted successfully");
+      } else {
+        throw new Error("Failed to delete image");
+      }
+      
+console.log(response.status);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
 
   return (
     <div>
@@ -160,7 +186,9 @@ export default function UploadImage() {
             </h1>
             <button
               type="button"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded mr-2 mb-2"            >
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 rounded mr-2 mb-2"
+              onClick={() => deleteHandler(product._id)}     
+              >
               Delete
             </button>
           </div>

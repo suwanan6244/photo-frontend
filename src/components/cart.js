@@ -74,8 +74,8 @@ export default class Cart extends Component {
                   <td>
                     <img
                       src={`http://localhost:5000/uploads/${item.productId.image}`}
-                    alt={item.productId.title}
-                    style={{ width: "50px" }}/>
+                      alt={item.productId.title}
+                      style={{ width: "50px" }} />
                   </td>
                   <td>{item.productId.title}</td>
                   <td>{item.productId.price}</td>
@@ -96,6 +96,13 @@ export default class Cart extends Component {
                   Total:
                 </td>
                 <td>{totalAmount}</td>
+                <td>
+                  <button
+                    className="btn btn-primary"
+                  >
+                    ชำระเงิน
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>

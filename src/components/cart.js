@@ -108,7 +108,7 @@ export default class Cart extends Component {
                     <img
                       src={`http://localhost:5000/uploads/${item.productId.image}`}
                       alt={item.productId.title}
-                      style={{ width: "50px" }} />
+                      style={{ width: "100px" }} />
                   </td>
                   <td>{item.productId.title}</td>
                   <td>{item.productId.price}</td>

@@ -37,3 +37,16 @@
     transition: 0.3s ease-in-out;
     border: none;
 }
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 60px;
+}
+
+.checkout-container {
+  margin-top: auto;
+  margin-left: 300px;
+}

@@ -10,11 +10,9 @@ import Profile from "./components/profile";
 import ResetPass from "./components/resetpass";
 import UploadImage from "./components/uploadimage";
 import ExtractWatermark from "./components/ExtractWatermark";
-import TestWatermark from "./components/PreviewWatermark";
 import Cart from "./components/cart";
 
 import SingleImage from "./components/SingleImage";
-import SingleImageCopy from "./components/SingleImage copy";
 
 
 function App() {
@@ -34,10 +32,7 @@ function App() {
               <Route path="/uploadimage" element={<UploadImage />} />
               <Route path="/resetpass" element={<ResetPass />} />
               <Route path="/extract-watermark" element={<ExtractWatermark />} />
-
               <Route path="/image/:id" element={<SingleImage />} />
-              <Route path="/imageapi/:id" element={<SingleImageCopy />} />
-              <Route path="/testwatermark" element={<TestWatermark />} />
 
 
               

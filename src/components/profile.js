@@ -1,17 +1,11 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "./navbar";
 import "./profile.css";
 
+export default function UserDetails() {
+  const [userData, setUserData] = useState({});
 
-
-export default class UserDetails extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userData: "",
-    };
-  }
-  componentDidMount() {
+  useEffect(() => {
     fetch("http://localhost:5000/userData", {
       method: "POST",
       crossDomain: true,
@@ -27,30 +21,26 @@ export default class UserDetails extends Component {
       .then((res) => res.json())
       .then((data) => {
         console.log(data, "userData");
-        this.setState({ userData: data.data });
-        if(data.data === 'token expired'){
+        if (data.data === "token expired") {
           alert("Token expired login again");
           window.localStorage.clear();
-          window.location.href = "/signin";        }
+          window.location.href = "./signin";
+        } else {
+          setUserData(data.data);
+        }
       });
-  }
+  }, []);
 
-  render() {
-    return (
-      <div>
+  return (
+    <div>
       <NavBar />
       <form className="profile-form">
-        <h1>
-        Account
-        </h1>   
-        Username: {this.state.userData.username}  <br /> 
-        FirstName: {this.state.userData.fname}  <br />   
-        LastName: {this.state.userData.lname}    <br />
-        Email : {this.state.userData.email}    <br />
+        <h1>Account</h1>
+        Username: {userData.username} <br />
+        FirstName: {userData.fname} <br />
+        LastName: {userData.lname} <br />
+        Email: {userData.email} <br />
       </form>
-      
-      </div>
-
-    );
-  }
+    </div>
+  );
 }

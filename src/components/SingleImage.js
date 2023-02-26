@@ -23,6 +23,7 @@ const SingleImage = () => {
     fetchData();
   }, [id]);
 
+  
   const handleAddToCart = async () => {
     try {
       const response = await fetch("http://localhost:5000/cart", {

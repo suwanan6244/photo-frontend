@@ -5,6 +5,8 @@ import "./profile.css";
 export default function UserDetails() {
   const [userData, setUserData] = useState({});
   const [checkouts, setCheckouts] = useState([]);
+  const [watermarkedImageUrl, setWatermarkedImageUrl] = useState("");
+
 
   useEffect(() => {
     fetch("http://localhost:5000/userData", {
@@ -45,6 +47,19 @@ export default function UserDetails() {
         console.log(error);
       });
   }, [userData]);
+
+  const downloadWatermarkedImage = (id) => {
+    fetch(`http://localhost:5000/watermarked-images/${id}`)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const url = URL.createObjectURL(blob);
+        setWatermarkedImageUrl(url);
+        window.open(url);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div>
@@ -92,9 +107,10 @@ export default function UserDetails() {
                     <td>${(product.productId.price * product.quantity).toFixed(2)}</td>
                     <td>{checkout.createdAt}</td>
                     <td>
-                    <button className="btn btn-primary">
-                      download
-                    </button>
+                    <button className="btn btn-primary" 
+                    onClick={() => downloadWatermarkedImage(product.productId._id)}>
+                      download</button>
+
                     </td>
                   </tr>
                 ))

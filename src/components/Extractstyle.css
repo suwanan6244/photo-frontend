@@ -1,17 +1,15 @@
 .extract-image {
-    background-color: #f3fbf7;
-    margin-right: 20px;
-    margin-left: 50px;
-    height: 400px;
+    background-color: #c7c7c7;
+    width: 560px;
+    height: 350px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   .extract2-image {
-    background-color: #f3fbf7;
-    margin-right: 30px;
-    margin-left: 30px;
-    height: 400px;
+    background-color: #c7c7c7;
+    width: 560px;
+    height: 350px;
     display: flex;
     justify-content: center;
     align-items: center;

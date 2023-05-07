@@ -32,6 +32,7 @@ export default function UserDetails() {
           setUserData(data.data);
         }
       });
+      
   }, []);
 
   useEffect(() => {
@@ -48,18 +49,10 @@ export default function UserDetails() {
       });
   }, [userData]);
 
-  const downloadWatermarkedImage = (id) => {
-    fetch(`http://localhost:5000/watermarked-images/${id}`)
-      .then((res) => res.blob())
-      .then((blob) => {
-        const url = URL.createObjectURL(blob);
-        setWatermarkedImageUrl(url);
-        window.open(url);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+ 
+
+ 
+  
 
   return (
     <div>
@@ -107,9 +100,7 @@ export default function UserDetails() {
                     <td>${(product.productId.price * product.quantity).toFixed(2)}</td>
                     <td>{checkout.createdAt}</td>
                     <td>
-                    <button className="btn btn-primary" 
-                    onClick={() => downloadWatermarkedImage(product.productId._id)}>
-                      download</button>
+                   
 
                     </td>
                   </tr>
@@ -122,3 +113,33 @@ export default function UserDetails() {
     </div>
   );
                 }
+
+/*import React, { useState } from "react";
+import NavBar from "./navbar";
+import "./profile.css";
+
+export default function UserDetails() {
+  const [watermarkedImageUrl, setWatermarkedImageUrl] = useState("");
+
+  const handleDownload = (id) => {
+    fetch(`http://localhost:5000/watermarked-images/${id}`)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const url = URL.createObjectURL(blob);
+        setWatermarkedImageUrl(url);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  return (
+    <div>
+      <NavBar />
+      <div className="profile-container">
+        <button onClick={() => handleDownload(`63fdb52880e5b8fea024f276`)}>Download Watermarked Image</button>
+        {watermarkedImageUrl && <img src={watermarkedImageUrl} alt="Watermarked Image" />}
+      </div>
+    </div>
+  );
+}*/

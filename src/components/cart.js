@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import NavBar from "./navbar";
 import StripeCheckout from 'react-stripe-checkout';
+import "./homestyle.css";
 
 
 export default class Cart extends Component {
@@ -75,6 +76,11 @@ export default class Cart extends Component {
       // Clear the cart items list after successful checkout
       this.setState({ cartItems: [], totalAmount: 0 });
       alert("Checkout successful!");
+
+      // Clear the user's cart on the server
+      await fetch(`http://localhost:5000/cart/${buyerId}`, {
+        method: "DELETE",
+      });
     } else {
       const error = await response.json();
       alert(`Checkout failed: ${error.msg}`);
@@ -139,9 +145,10 @@ export default class Cart extends Component {
                     billingAddress
                     shippingAddress
                   >
-                    <button className="btn btn-primary">
+                    <button className={`btn btn-primary ${!cartItems.length ? "disabled" : ""}`} disabled={!cartItems.length}>
                       Checkout
                     </button>
+
                   </StripeCheckout>
 
                 </td>

@@ -207,7 +207,7 @@ console.log(response.status);
             </h1>
             <button
               type="button"
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 rounded mr-2 mb-2"
+              className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-3 rounded mr-2 mb-2"
               onClick={() => deleteHandler(product._id)}     
               >
               Delete

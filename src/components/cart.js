@@ -75,7 +75,7 @@ export default class Cart extends Component {
     if (response.ok) {
       // Clear the cart items list after successful checkout
       this.setState({ cartItems: [], totalAmount: 0 });
-      alert("Checkout successful!");
+      window.location.href = "./purchased";
 
       // Clear the user's cart on the server
       await fetch(`http://localhost:5000/cart/${buyerId}`, {
@@ -95,15 +95,13 @@ export default class Cart extends Component {
       <div>
         <NavBar />
         <div className="container mt-4">
-          <h1>Shopping Cart</h1>
-          <table className="table table-bordered mt-4">
+          <h1 style={{paddingLeft: "60px", fontWeight: "bold" ,fontSize: "20px"}}>Shopping Cart</h1>
+          <table className="table table-bordered mt-4 table-small">
             <thead>
               <tr>
                 <th>Image</th>
                 <th>Title</th>
                 <th>Price</th>
-                <th>Quantity</th>
-                <th>Subtotal</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -117,9 +115,7 @@ export default class Cart extends Component {
                       style={{ width: "100px" }} />
                   </td>
                   <td>{item.productId.title}</td>
-                  <td>{item.productId.price}</td>
-                  <td>{item.quantity}</td>
-                  <td>{item.productId.price * item.quantity}</td>
+                  <td>${item.productId.price}</td>
                   <td>
                     <button
                       className="btn btn-danger"
@@ -131,25 +127,31 @@ export default class Cart extends Component {
                 </tr>
               ))}
               <tr>
-                <td colSpan="4" align="right">
+                <td colSpan="2" align="right">
                   Total:
                 </td>
                 <td>{totalAmount}</td>
                 <td>
-                  <StripeCheckout
-                    stripeKey="pk_test_51MfJMuCa6p7Qb3lSI4El6ex4VRWPv4W5hkSeD6Fa5amibfS1fM828fBbtEEHT1xbBru3OcCZo7HvDjovlG1b4ybC003WbPNoG0"
-                    token={this.handleToken}
-                    name="Shopping Cart"
-                    amount={totalAmount * 100}
-                    currency="USD"
-                    billingAddress
-                    shippingAddress
-                  >
-                    <button className={`btn btn-primary ${!cartItems.length ? "disabled" : ""}`} disabled={!cartItems.length}>
+                  {cartItems.length > 0 ? (
+                    <StripeCheckout
+                      stripeKey="pk_test_51MfJMuCa6p7Qb3lSI4El6ex4VRWPv4W5hkSeD6Fa5amibfS1fM828fBbtEEHT1xbBru3OcCZo7HvDjovlG1b4ybC003WbPNoG0"
+                      token={this.handleToken}
+                      name="Shopping Cart"
+                      amount={totalAmount * 100}
+                      currency="USD"
+                      billingAddress
+                      shippingAddress
+                    >
+                      <button className="btn btn-primary">
+                        Checkout
+                      </button>
+                    </StripeCheckout>
+                  ) : (
+                    <button className="btn disabled" disabled>
                       Checkout
                     </button>
+                  )}
 
-                  </StripeCheckout>
 
                 </td>
               </tr>

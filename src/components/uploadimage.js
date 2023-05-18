@@ -83,7 +83,7 @@ export default function UploadImage() {
         window.location.href = "./uploadimage";
         alert('Upload completed');
       } else {
-        throw new Error('Invalid Data');
+        throw new Error('Please upload only image files.');
       }
     } catch (error) {
       alert(error.message);
@@ -133,7 +133,7 @@ console.log(response.status);
               {({ getRootProps, getInputProps }) => (
                 <div
                   {...getRootProps()}
-                  className="cursor-pointer w-full my-3 text-lg font-bold border-dashed h-72 border-4 border-gray-800 text-black-800 flex items-center justify-center"
+                  className="cursor-pointer w-full my-3 text-lg font-bold border-dashed h-96 border-4 border-gray-800 text-black-800 flex items-center justify-center"
                 >
                   <input {...getInputProps({ accept: 'image/*' })} />
                   Choose Image
@@ -144,10 +144,10 @@ console.log(response.status);
         </div>
   
         {/* Form container */}
-        <div className="w-1/2 p-4">
+        <div className="w-1/2 p-16">
           <form
             onSubmit={submitHandler}
-            className="bg-pink-100 shadow-md rounded lg:w-4/5 md:w-3/5 w-full flex-colo py-4 px-5"
+            className="bg-gray-100 shadow-md rounded lg:w-4/5 md:w-3/5 w-full flex-colo py-4 px-5"
           >
                         <label>Image</label>
             {/* input title */}
@@ -179,7 +179,7 @@ console.log(response.status);
             {/* submit button */}
             <button
               type="submit"
-              className="w-100 my-2 h-11 bg-gray-600 py-1 rounded text-white font-bold"
+              className="w-100 my-2 h-11 bg-blue-500 hover:bg-blue-700 py-1 rounded text-white font-bold"
             >
               Publish now
             </button>

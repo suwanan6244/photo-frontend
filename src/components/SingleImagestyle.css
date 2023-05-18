@@ -65,7 +65,7 @@
   }
   .round-black-btn {
     border-radius: 4px;
-    background: #000000;
+    background: rgb(59 130 246);
     color: #fff;
     width: 100%;
     height: 50px;
@@ -77,5 +77,22 @@
   }
   .round-black-btn:hover,
   .round-black-btn:focus {
-    background: #1cb803;
+    background:  rgb(30 64 175);;
+  }
+
+  .Purchased-round-black-btn {
+    border-radius: 4px;
+    background:  rgb(107 114 128);
+    color: #fff;
+    width: 100%;
+    height: 50px;
+    border: 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 15px;
+    transition: all 0.5s ease-in-out 0s;
+  }
+  .Purchased-round-black-btn:hover,
+  .Purchased-round-black-btn:focus {
+    background: rgb(107 114 128);
   }

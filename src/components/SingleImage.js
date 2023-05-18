@@ -8,6 +8,8 @@ const SingleImage = () => {
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [userId, setUserId] = useState("");
+  const [purchasedProducts, setPurchasedProducts] = useState([]);
+
 
   useEffect(() => {
     const storedUserId = window.localStorage.getItem("userId");
@@ -21,9 +23,20 @@ const SingleImage = () => {
       setProduct(product);
     };
     fetchData();
-  }, [id]);
 
-  
+    if (userId) {
+      fetch(`http://localhost:5000/checkout/${userId}`)
+        .then((res) => res.json())
+        .then((result) => {
+          const purchased = result.checkouts
+            .flatMap((checkout) => checkout.products)
+            .map((product) => product.productId._id);
+          setPurchasedProducts(purchased);
+        });
+    }
+  }, [id, userId]);
+
+
   const handleAddToCart = async () => {
     try {
       const response = await fetch("http://localhost:5000/cart", {
@@ -67,9 +80,18 @@ const SingleImage = () => {
                   <h6>Price</h6>
                   <span>${product.price}</span>
                 </div>
-            
-                <button className="round-black-btn" onClick={handleAddToCart}>
-                  Add To Cart
+
+                <button
+                  type="button"
+                  className={purchasedProducts.includes(product._id) ? "Purchased-round-black-btn" : "round-black-btn"}
+                  onClick={() => {
+                    if (!purchasedProducts.includes(product._id)) {
+                      handleAddToCart(product._id);
+                    }
+                  }}
+                  disabled={purchasedProducts.includes(product._id)}
+                >
+                  {purchasedProducts.includes(product._id) ? "Purchased" : "Add to Cart"}
                 </button>
               </div>
             </div>

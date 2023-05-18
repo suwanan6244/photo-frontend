@@ -19,3 +19,9 @@
     cursor: not-allowed;
   }
   
+  .table-small {
+    width: 90%;
+    margin: auto;
+  }
+  
+  

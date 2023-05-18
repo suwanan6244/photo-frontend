@@ -11,6 +11,7 @@ import ResetPass from "./components/resetpass";
 import UploadImage from "./components/uploadimage";
 import ExtractWatermark from "./components/ExtractWatermark";
 import Cart from "./components/cart";
+import Purchased from "./components/purchased";
 
 import SingleImage from "./components/SingleImage";
 
@@ -30,6 +31,7 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/uploadimage" element={<UploadImage />} />
+              <Route path="/purchased" element={<Purchased />} />
               <Route path="/resetpass" element={<ResetPass />} />
               <Route path="/extract-watermark" element={<ExtractWatermark />} />
               <Route path="/image/:id" element={<SingleImage />} />

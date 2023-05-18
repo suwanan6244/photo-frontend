@@ -3,7 +3,18 @@ import "./navbarstyle.css";
 
 export default class Navbar extends Component {
 
-  state = { clicked: false };
+  constructor(props) {
+    super(props);
+    this.state = {
+      clicked: false,
+      cartCount: 0,
+    };
+  }
+
+  updateCartCount = (count) => {
+    this.setState({ cartCount: count });
+  };
+  
   handleClick = () =>{
     this.setState({clicked: !this.state.clicked})
   }
@@ -32,7 +43,8 @@ export default class Navbar extends Component {
         <div className="navbar">
           <ul className={this.state.clicked ? "navbar active" : "navbar"}>
             <li><a href="/home">Home</a></li>
-            <li><a href="/uploadimage">Sell</a></li>
+            <li><a href="/uploadimage">Upload</a></li>
+            <li><a href="/purchased">Purchased</a></li>
             <li><a href="/extract-watermark">ExtractWatermark</a></li>
             <li><a href="/profile">Account</a></li>
             <li>

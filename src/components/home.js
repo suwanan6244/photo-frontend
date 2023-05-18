@@ -6,6 +6,8 @@ const Home = () => {
   const [items, setItems] = useState([]);
   const [userId, setUserId] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [purchasedProducts, setPurchasedProducts] = useState([]);
+
 
   useEffect(() => {
     const storedUserId = window.localStorage.getItem("userId");
@@ -39,8 +41,17 @@ const Home = () => {
           window.location.href = "./signin";
         }
       });
-
-  }, []);
+    if (userId) {
+      fetch(`http://localhost:5000/checkout/${userId}`)
+        .then((res) => res.json())
+        .then((result) => {
+          const purchased = result.checkouts
+            .flatMap((checkout) => checkout.products)
+            .map((product) => product.productId._id);
+          setPurchasedProducts(purchased);
+        });
+    }
+  }, [userId]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -70,14 +81,18 @@ const Home = () => {
     <div>
       <NavBar />
       <div className="container mx-auto my-4">
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          type="text"
-          placeholder="Search for images..."
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
+        <div className="d-flex justify-content-center">
+          <input
+            className="shadow appearance-none border rounded w-2/4 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            placeholder="Search for images..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+          <i className="fas fa-search" style={{ marginLeft: "-25px", marginTop: "10px" }}></i>
+        </div>
       </div>
+
       <div className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 container mx-auto gap-10 my-12">
         {items
           .filter((product) =>
@@ -105,20 +120,30 @@ const Home = () => {
                 </button>
               </Link>
 
-              <button
-                type="button"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded mr-2 mb-2"
-                onClick={() => handleAddToCart(product._id)}
-              >
-                Add to Cart
-              </button>
+  <button
+  type="button"
+  className={purchasedProducts.includes(product._id) ? "bg-gray-500 text-white  font-bold py-2 px-3 rounded mr-2 mb-2" : "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded mr-2 mb-2"}
+  onClick={() => {
+    if (!purchasedProducts.includes(product._id)) {
+      handleAddToCart(product._id);
+    }
+  }}
+  disabled={purchasedProducts.includes(product._id)}
+>
+  {purchasedProducts.includes(product._id) ? "Purchased" : "Add to Cart"}
+</button>
+
+
             </div>
           ))}
-           {items.filter((product) =>
-    product.title.toLowerCase().includes(searchTerm.toLowerCase())
-  ).length === 0 && searchTerm !== "" &&
-    <p>No resources found.</p>
-  }
+        {items.filter((product) =>
+          product.title.toLowerCase().includes(searchTerm.toLowerCase())
+        ).length === 0 && searchTerm !== "" &&
+          <div className="justify-content-center" >
+            <p style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", fontSize: "20px", color: "#a7a7a7" }}>
+              Result Not Found...
+            </p>      </div>
+        }
       </div>
     </div>
   );

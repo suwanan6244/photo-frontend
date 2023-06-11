@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "./navbar";
 import { Link } from "react-router-dom";
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+
 
 const Home = () => {
   const [items, setItems] = useState([]);
   const [userId, setUserId] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [purchasedProducts, setPurchasedProducts] = useState([]);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [alertSeverity, setAlertSeverity] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
+
 
 
   useEffect(() => {
@@ -71,15 +78,46 @@ const Home = () => {
         }),
       });
       const data = await response.json();
-      alert(data.message);
+      if (response.status === 400) {
+        showAlert('warning', data.message);
+      } else {
+        showAlert('success', data.message);
+      }
     } catch (error) {
       console.log(error);
-      alert("Error adding product to cart");
+      showAlert('error', 'Error adding product to cart');
     }
   };
+
+
+
+  const showAlert = (severity, message) => {
+    setAlertSeverity(severity);
+    setAlertMessage(message);
+    setOpenAlert(true);
+  };
+
+  const handleCloseAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenAlert(false);
+  };
+
   return (
     <div>
       <NavBar />
+      <Snackbar
+        open={openAlert}
+        autoHideDuration={3000}
+        onClose={handleCloseAlert}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={handleCloseAlert} severity={alertSeverity} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
+
       <div className="container mx-auto my-4">
         <div className="d-flex justify-content-center">
           <input
@@ -120,18 +158,18 @@ const Home = () => {
                 </button>
               </Link>
 
-  <button
-  type="button"
-  className={purchasedProducts.includes(product._id) ? "bg-gray-500 text-white  font-bold py-2 px-3 rounded mr-2 mb-2" : "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded mr-2 mb-2"}
-  onClick={() => {
-    if (!purchasedProducts.includes(product._id)) {
-      handleAddToCart(product._id);
-    }
-  }}
-  disabled={purchasedProducts.includes(product._id)}
->
-  {purchasedProducts.includes(product._id) ? "Purchased" : "Add to Cart"}
-</button>
+              <button
+                type="button"
+                className={purchasedProducts.includes(product._id) ? "bg-gray-500 text-white  font-bold py-2 px-3 rounded mr-2 mb-2" : "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded mr-2 mb-2"}
+                onClick={() => {
+                  if (!purchasedProducts.includes(product._id)) {
+                    handleAddToCart(product._id);
+                  }
+                }}
+                disabled={purchasedProducts.includes(product._id)}
+              >
+                {purchasedProducts.includes(product._id) ? "Purchased" : "Add to Cart"}
+              </button>
 
 
             </div>

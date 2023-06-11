@@ -4,6 +4,8 @@ import NavBar from "./navbar";
 import Dropzone from "react-dropzone";
 //import { toast } from 'react-hot-toast';
 import { Link } from "react-router-dom";
+import Alert from '@mui/material/Alert';
+import { Snackbar } from '@mui/material';
 
 export default function UploadImage() {
   const [image, setImage] = useState("");
@@ -13,6 +15,9 @@ export default function UploadImage() {
   const [description, setDescription] = useState("");
   const [items, setItems] = useState([]);
   const [userId, setUserId] = useState("");
+  const [openAlert, setOpenAlert] = useState(false);
+  const [alertSeverity, setAlertSeverity] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
 
   useEffect(() => {
     const storedUserId = window.localStorage.getItem("userId");
@@ -24,29 +29,29 @@ export default function UploadImage() {
           const userProducts = result.filter((product) => product.sellerId === storedUserId);
           setItems(result);
         });
-      }
-      fetch("http://localhost:5000/userData", {
-        method: "POST",
-        crossDomain: true,
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({
-          token: window.localStorage.getItem("token"),
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data, "userData");
-          if (data.data === "token expired") {
-            alert("Token expired login again");
-            window.localStorage.clear();
-            window.location.href = "./signin";
-          }
-        });
-    }, []);
+    }
+    fetch("http://localhost:5000/userData", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        token: window.localStorage.getItem("token"),
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userData");
+        if (data.data === "token expired") {
+          alert("Token expired login again");
+          window.localStorage.clear();
+          window.location.href = "./signin";
+        }
+      });
+  }, []);
   const onDrop = (acceptedFiles) => {
     setImage(acceptedFiles[0]);
   };
@@ -54,11 +59,11 @@ export default function UploadImage() {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (!image) {
-      alert('Image required');
+      showAlert('warning', 'Image required');
       return;
     }
     if (title.length < 3) {
-      alert('Title is too short');
+      showAlert('warning', 'Title is too short');
       return;
     }
     const formData = new FormData();
@@ -66,10 +71,10 @@ export default function UploadImage() {
     formData.append('title', title);
     formData.append('price', price);
     formData.append('description', description);
-  
+
     try {
       const userId = window.localStorage.getItem('userId');
-  
+
       const response = await fetch('http://localhost:5000/image', {
         method: 'POST',
         body: formData,
@@ -81,7 +86,7 @@ export default function UploadImage() {
         const newImage = await response.json();
         setPostDatas(newImage);
         window.location.href = "./uploadimage";
-        alert('Upload completed');
+        showAlert('success', 'Upload completed');
       } else {
         throw new Error('Please upload only image files.');
       }
@@ -104,21 +109,44 @@ export default function UploadImage() {
       if (response.ok) {
         // Remove the deleted image from the items list
         setItems(items.filter((item) => item._id !== id));
-        alert("Image deleted successfully");
+        showAlert("success", "Image deleted successfully");
       } else {
         throw new Error("Failed to delete image");
       }
-      
-console.log(response.status);
+
+      console.log(response.status);
     } catch (error) {
       alert(error.message);
     }
   };
+  const showAlert = (severity, message) => {
+    setAlertSeverity(severity);
+    setAlertMessage(message);
+    setOpenAlert(true);
+  };
+
+  const handleCloseAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenAlert(false);
+  };
+
 
 
   return (
     <div>
       <NavBar />
+      <Snackbar
+        open={openAlert}
+        autoHideDuration={3000}
+        onClose={handleCloseAlert}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={handleCloseAlert} severity={alertSeverity} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
       <div className="flex flex-row">
         {/* Image container */}
         <div className="w-3/5 p-4">
@@ -142,14 +170,14 @@ console.log(response.status);
             </Dropzone>
           )}
         </div>
-  
+
         {/* Form container */}
         <div className="w-1/2 p-16">
           <form
             onSubmit={submitHandler}
             className="bg-gray-100 shadow-md rounded lg:w-4/5 md:w-3/5 w-full flex-colo py-4 px-5"
           >
-                        <label>Image</label>
+            <label>Image</label>
             {/* input title */}
             <input
               type="text"
@@ -175,7 +203,7 @@ console.log(response.status);
               placeholder="Description"
               className="w-full my-2 bg-white py-2.5 px-2 rounded border border-black-800 text-black-800 font-semibold"
             ></textarea>
-  
+
             {/* submit button */}
             <button
               type="submit"
@@ -199,7 +227,7 @@ console.log(response.status);
                 src={`http://localhost:5000/uploads/${product.image}`}
                 alt={product.title}
               />
-              </Link>
+            </Link>
             <h1 className="font-semibold text-black-800  my-2 leading-8">
               <Link to={`/image/${product._id}`}>
                 {product.title}<br />${product.price}
@@ -208,8 +236,8 @@ console.log(response.status);
             <button
               type="button"
               className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-3 rounded mr-2 mb-2"
-              onClick={() => deleteHandler(product._id)}     
-              >
+              onClick={() => deleteHandler(product._id)}
+            >
               Delete
             </button>
           </div>
@@ -217,7 +245,7 @@ console.log(response.status);
       </div>
     </div>
   );
-  
+
 
 }
 

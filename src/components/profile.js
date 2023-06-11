@@ -64,7 +64,8 @@ export default function UserDetails() {
   return (
     <div>
       <NavBar />
-      <div className="profile-container">
+       
+        <div className="checkout-container">
         <form className="profile-form">
           <h1 style={{fontWeight: "bold" ,fontSize: "20px"}}>My Account</h1>
           Username: {userData.username} <br />
@@ -72,11 +73,7 @@ export default function UserDetails() {
           LastName: {userData.lname} <br />
           Email: {userData.email} <br />
         </form>
-        <div className="checkout-container">
-          <h2 style={{fontWeight: "bold" ,fontSize: "20px"}}>Trading History</h2>
-          
         </div>
-      </div>
     </div>
   );
                 }

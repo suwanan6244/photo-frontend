@@ -55,57 +55,57 @@ function ExtractWatermark() {
     <div>
       <NavBar />
       <div className="row">
-      <div className="flex flex-row">
-      <div className="col-md-5 p-6 ml-12">
-  <Dropzone onDrop={onDrop}>
-    {({ getRootProps, getInputProps }) => (
-      <div
-        {...getRootProps()}
-        className="cursor-pointer w-full my-6 text-lg font-bold border-dashed h-96 border-4 border-gray-800 text-black-800 flex items-center justify-center"
-      >
-        <input
-          {...getInputProps({ accept: 'image/*' })}
-          id="dropzoneInput"
-        />
-        {image ? (
-          <img
-            src={URL.createObjectURL(image)}
-            alt="imageUploded"
-            className="w-full h-112 object-contain"
-          />
-        ) : (
-          "Choose Image"
-        )}
-      </div>
-    )}
-  </Dropzone>
-  <button
-    onClick={() => {
-      document.getElementById('dropzoneInput').click();
-      setImage(null); // Clear the image state
-    }}
-    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded mr-2 mb-2"
-  >
-    Choose Image
-  </button>
-</div>
-
-
-        <div className="col-md-5 p-6 ml-12">
-          <div className=" w-full my-6 text-lg font-bold border-dashed h-96 border-4 border-gray-800 text-black-800 flex items-center justify-center">
-            {watermark && <img src={watermark} alt="Extracted Watermark" />}
-          </div>
-          <div>
+        <div className="flex flex-row">
+          <div className="col-md-5 p-6 ml-12">
+            <Dropzone onDrop={onDrop}>
+              {({ getRootProps, getInputProps }) => (
+                <div
+                  {...getRootProps()}
+                  className="cursor-pointer w-full my-6 text-lg font-bold border-dashed h-96 border-4 border-gray-800 text-black-800 flex items-center justify-center"
+                >
+                  <input
+                    {...getInputProps({ accept: 'image/*' })}
+                    id="dropzoneInput"
+                  />
+                  {image ? (
+                    <img
+                      src={URL.createObjectURL(image)}
+                      alt="imageUploded"
+                      className="w-full h-112 object-contain"
+                    />
+                  ) : (
+                    "Choose Image"
+                  )}
+                </div>
+              )}
+            </Dropzone>
             <button
-              onClick={handleExtractWatermark}
+              onClick={() => {
+                document.getElementById('dropzoneInput').click();
+                setImage(null); // Clear the image state
+              }}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded mr-2 mb-2"
             >
-              Extract Watermark
+              Choose Image
             </button>
+          </div>
+
+
+          <div className="col-md-5 p-6 ml-12">
+            <div className=" w-full my-6 text-lg font-bold border-dashed h-96 border-4 border-gray-800 text-black-800 flex items-center justify-center">
+              {watermark && <img src={watermark} alt="Extracted Watermark" />}
+            </div>
+            <div>
+              <button
+                onClick={handleExtractWatermark}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded mr-2 mb-2"
+              >
+                Extract Watermark
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }

@@ -9,18 +9,18 @@ const SingleImage = () => {
   const [quantity, setQuantity] = useState(1);
   const [userId, setUserId] = useState("");
   const [purchasedProducts, setPurchasedProducts] = useState([]);
+  const [seller, setSeller] = useState({}); 
 
 
   useEffect(() => {
-    const storedUserId = window.localStorage.getItem("userId");
-    if (storedUserId) {
-      setUserId(storedUserId);
-    }
-
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:5000/allimage/${id}`);
-      const product = await response.json();
-      setProduct(product);
+      const productResponse = await fetch(`http://localhost:5000/allimage/${id}`);
+      const productData = await productResponse.json();
+      setProduct(productData);
+
+      const sellerResponse = await fetch(`http://localhost:5000/user/${productData.sellerId}`);
+      const sellerData = await sellerResponse.json();
+      setSeller(sellerData);
     };
     fetchData();
 
@@ -72,6 +72,7 @@ const SingleImage = () => {
             <div className="product-dtl">
               <div className="product-info">
                 <div className="product-name">{product.title}</div>
+                <div style={{marginBottom: "5px" ,marginTop: "-20px",textDecoration: "underline", cursor: "pointer",  color: "#7a7a7a"}}>{seller.username}</div>
                 <div className="product-description">{product.description}</div>
               </div>
 

@@ -71,10 +71,10 @@ export default function UploadImage() {
     formData.append('title', title);
     formData.append('price', price);
     formData.append('description', description);
-
+  
     try {
       const userId = window.localStorage.getItem('userId');
-
+  
       const response = await fetch('http://localhost:5000/image', {
         method: 'POST',
         body: formData,
@@ -88,12 +88,14 @@ export default function UploadImage() {
         window.location.href = "./uploadimage";
         showAlert('success', 'Upload completed');
       } else {
-        throw new Error('Please upload only image files.');
+        const errorResponse = await response.json();
+        throw new Error(errorResponse.msg); // ดึงข้อความของข้อผิดพลาดมาจาก response ของ server
       }
     } catch (error) {
-      alert(error.message);
+      showAlert('error', error.message); // แสดง Alert ด้วยข้อความของข้อผิดพลาด
     }
   };
+  
   const deleteHandler = async (id) => {
     try {
       const response = await fetch(`http://localhost:5000/image/${id}`, {

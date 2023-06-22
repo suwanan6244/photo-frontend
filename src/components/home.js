@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from "react";
-import NavBar from "./navbar";
-import { Link } from "react-router-dom";
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
+import React, { useEffect, useState } from "react"
+import NavBar from "./navbar"
+import { Link } from "react-router-dom"
+import Alert from '@mui/material/Alert'
+import Snackbar from '@mui/material/Snackbar'
 
 
 const Home = () => {
-  const [items, setItems] = useState([]);
-  const [userId, setUserId] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [purchasedProducts, setPurchasedProducts] = useState([]);
-  const [openAlert, setOpenAlert] = useState(false);
-  const [alertSeverity, setAlertSeverity] = useState("");
-  const [alertMessage, setAlertMessage] = useState("");
+  const [items, setItems] = useState([])
+  const [userId, setUserId] = useState("")
+  const [searchTerm, setSearchTerm] = useState("")
+  const [purchasedProducts, setPurchasedProducts] = useState([])
+  const [openAlert, setOpenAlert] = useState(false)
+  const [alertSeverity, setAlertSeverity] = useState("")
+  const [alertMessage, setAlertMessage] = useState("")
 
 
 
   useEffect(() => {
-    const storedUserId = window.localStorage.getItem("userId");
+    const storedUserId = window.localStorage.getItem("userId")
     if (storedUserId) {
-      setUserId(storedUserId);
+      setUserId(storedUserId)
     }
     fetch("http://localhost:5000/allimage")
       .then((res) => res.json())
       .then((result) => {
-        setItems(result);
-      });
+        setItems(result)
+      })
 
     fetch("http://localhost:5000/userData", {
       method: "POST",
@@ -41,28 +41,28 @@ const Home = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "userData");
+        console.log(data, "userData")
         if (data.data === "token expired") {
-          alert("Token expired login again");
-          window.localStorage.clear();
-          window.location.href = "./signin";
+          alert("Token expired login again")
+          window.localStorage.clear()
+          window.location.href = "./signin"
         }
-      });
+      })
     if (userId) {
       fetch(`http://localhost:5000/checkout/${userId}`)
         .then((res) => res.json())
         .then((result) => {
           const purchased = result.checkouts
             .flatMap((checkout) => checkout.products)
-            .map((product) => product.productId._id);
-          setPurchasedProducts(purchased);
-        });
+            .map((product) => product.productId._id)
+          setPurchasedProducts(purchased)
+        })
     }
-  }, [userId]);
+  }, [userId])
 
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
+    setSearchTerm(e.target.value)
+  }
 
   const handleAddToCart = async (productId) => {
     try {
@@ -74,35 +74,35 @@ const Home = () => {
         body: JSON.stringify({
           buyerId: userId,
           productId: productId,
-          quantity: 1, // Default quantity is 1
+          quantity: 1, 
         }),
-      });
-      const data = await response.json();
+      })
+      const data = await response.json()
       if (response.status === 400) {
-        showAlert('warning', data.message);
+        showAlert('warning', data.message)
       } else {
-        showAlert('success', data.message);
+        showAlert('success', data.message)
       }
     } catch (error) {
-      console.log(error);
-      showAlert('error', 'Error adding product to cart');
+      console.log(error)
+      showAlert('error', 'Error adding product to cart')
     }
-  };
+  }
 
 
 
   const showAlert = (severity, message) => {
-    setAlertSeverity(severity);
-    setAlertMessage(message);
-    setOpenAlert(true);
-  };
+    setAlertSeverity(severity)
+    setAlertMessage(message)
+    setOpenAlert(true)
+  }
 
   const handleCloseAlert = (event, reason) => {
     if (reason === 'clickaway') {
-      return;
+      return
     }
-    setOpenAlert(false);
-  };
+    setOpenAlert(false)
+  }
 
   return (
     <div>
@@ -163,7 +163,7 @@ const Home = () => {
                 className={purchasedProducts.includes(product._id) ? "bg-gray-500 text-white  font-bold py-2 px-3 rounded mr-2 mb-2" : "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded mr-2 mb-2"}
                 onClick={() => {
                   if (!purchasedProducts.includes(product._id)) {
-                    handleAddToCart(product._id);
+                    handleAddToCart(product._id)
                   }
                 }}
                 disabled={purchasedProducts.includes(product._id)}
@@ -184,7 +184,7 @@ const Home = () => {
         }
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import NavBar from "./navbar";
-import "./purchased.css";
-import moment from 'moment-timezone';
+import React, { useEffect, useState } from "react"
+import NavBar from "./navbar"
+import "./purchased.css"
+import moment from 'moment-timezone'
 
 
 export default function Purchased() {
-  const [userData, setUserData] = useState({});
-  const [checkouts, setCheckouts] = useState([]);
-  const [watermarkedImageUrl, setWatermarkedImageUrl] = useState("");
+  const [userData, setUserData] = useState({})
+  const [checkouts, setCheckouts] = useState([])
+  const [watermarkedImageUrl, setWatermarkedImageUrl] = useState("")
 
 
   useEffect(() => {
@@ -25,33 +25,33 @@ export default function Purchased() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "userData");
+        console.log(data, "userData")
         if (data.data === "token expired") {
-          alert("Token expired login again");
-          window.localStorage.clear();
-          window.location.href = "./signin";
+          alert("Token expired login again")
+          window.localStorage.clear()
+          window.location.href = "./signin"
         } else {
-          setUserData(data.data);
+          setUserData(data.data)
         }
-      });
-  }, []);
+      })
+  }, [])
 
   useEffect(() => {
-    const storedUserId = window.localStorage.getItem("userId");
-    const buyerId = storedUserId ? storedUserId : this.props.userId;
+    const storedUserId = window.localStorage.getItem("userId")
+    const buyerId = storedUserId ? storedUserId : this.props.userId
     fetch(`http://localhost:5000/checkout/${buyerId}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.checkouts);
+        console.log(data.checkouts)
         const sortedCheckouts = data.checkouts.sort((a, b) => {
-          return new Date(b.createdAt) - new Date(a.createdAt);
-        });
-        setCheckouts(sortedCheckouts);
+          return new Date(b.createdAt) - new Date(a.createdAt)
+        })
+        setCheckouts(sortedCheckouts)
       })
       .catch((error) => {
-        console.log(error);
-      });
-  }, [userData]);
+        console.log(error)
+      })
+  }, [userData])
   
   
 
@@ -59,18 +59,18 @@ export default function Purchased() {
     fetch(`http://localhost:5000/watermarked-images/${id}`)
       .then((res) => res.blob())
       .then((blob) => {
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', `${title}.jpg`); // Use the image title as the filename
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        const url = URL.createObjectURL(blob)
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', `${title}.jpg`)
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
       })
       .catch((error) => {
-        console.log(error);
-      });
-  };
+        console.log(error)
+      })
+  }
 
 
 
@@ -123,5 +123,5 @@ export default function Purchased() {
         </div>
       </div>
     </div>
-  );
+  )
 }

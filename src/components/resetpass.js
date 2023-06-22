@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import "./resetpassstyle.css";
+import React, { Component } from "react"
+import "./resetpassstyle.css"
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -8,16 +8,16 @@ const MySwal = withReactContent(Swal)
 
 export default class ResetPass extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       email: "",
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleSubmit(e) {
-    e.preventDefault();
-    const { email } = this.state;
-    console.log(email);
+    e.preventDefault()
+    const { email } = this.state
+    console.log(email)
 
     fetch("http://localhost:5000/forgot-password", {
       method: "POST",
@@ -33,7 +33,7 @@ export default class ResetPass extends Component {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "userRegister");
+        console.log(data, "userRegister")
         if(data.status === "error"){
           MySwal.fire({
             html: <strong>โปรดกรอกข้อมูล</strong>,
@@ -81,6 +81,6 @@ export default class ResetPass extends Component {
       </form>
     </div>
 
-    );
+    )
   }
 }

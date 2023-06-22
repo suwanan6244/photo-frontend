@@ -1,64 +1,63 @@
-import React, { Component } from "react";
-import NavBar from "./navbar";
-import StripeCheckout from 'react-stripe-checkout';
-import "./homestyle.css";
+import React, { Component } from "react"
+import NavBar from "./navbar"
+import StripeCheckout from 'react-stripe-checkout'
+import "./homestyle.css"
 
 
 export default class Cart extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       cartItems: [],
       totalAmount: 0
-    };
+    }
   }
 
   componentDidMount() {
-    const storedUserId = window.localStorage.getItem("userId");
-    const userId = storedUserId ? storedUserId : this.props.userId;
+    const storedUserId = window.localStorage.getItem("userId")
+    const userId = storedUserId ? storedUserId : this.props.userId
     fetch(`http://localhost:5000/cart/${userId}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "cartItems");
+        console.log(data, "cartItems")
         const totalAmount = data.cartItems.reduce((total, item) => {
-          return total + item.productId.price * item.quantity;
-        }, 0);
-        this.setState({ cartItems: data.cartItems, totalAmount });
+          return total + item.productId.price * item.quantity
+        }, 0)
+        this.setState({ cartItems: data.cartItems, totalAmount })
       })
       .catch((error) => {
-        console.log(error);
-      });
+        console.log(error)
+      })
   }
 
   handleDelete = (itemId) => {
-    const storedUserId = window.localStorage.getItem("userId");
-    const buyerId = storedUserId ? storedUserId : this.props.userId;
+    const storedUserId = window.localStorage.getItem("userId")
+    const buyerId = storedUserId ? storedUserId : this.props.userId
     fetch(`http://localhost:5000/cart/${buyerId}/${itemId}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        console.log(data)
         // Update the cart items list after deleting the item
         const updatedCartItems = this.state.cartItems.filter(
           (item) => item._id !== itemId
-        );
+        )
         const totalAmount = updatedCartItems.reduce((total, item) => {
-          return total + item.productId.price * item.quantity;
-        }, 0);
-        this.setState({ cartItems: updatedCartItems, totalAmount });
+          return total + item.productId.price * item.quantity
+        }, 0)
+        this.setState({ cartItems: updatedCartItems, totalAmount })
       })
       .catch((error) => {
-        console.log(error);
-      });
-  };
+        console.log(error)
+      })
+  }
 
   handleToken = async (token) => {
-    const storedUserId = window.localStorage.getItem("userId");
-    const buyerId = storedUserId ? storedUserId : this.props.userId;
-    const { cartItems, totalAmount } = this.state;
+    const storedUserId = window.localStorage.getItem("userId")
+    const buyerId = storedUserId ? storedUserId : this.props.userId
+    const { cartItems, totalAmount } = this.state
 
-    // Send a POST request to the server to checkout the cart
     const response = await fetch(`http://localhost:5000/checkout`, {
       method: "POST",
       headers: {
@@ -70,27 +69,25 @@ export default class Cart extends Component {
         totalAmount,
         stripeTokenId: token.id,
       }),
-    });
+    })
 
     if (response.ok) {
-      // Clear the cart items list after successful checkout
-      this.setState({ cartItems: [], totalAmount: 0 });
-      window.location.href = "./purchased";
+      this.setState({ cartItems: [], totalAmount: 0 })
+      window.location.href = "./purchased"
 
-      // Clear the user's cart on the server
       await fetch(`http://localhost:5000/cart/${buyerId}`, {
         method: "DELETE",
-      });
+      })
     } else {
-      const error = await response.json();
-      alert(`Checkout failed: ${error.msg}`);
+      const error = await response.json()
+      alert(`Checkout failed: ${error.msg}`)
     }
-  };
+  }
 
 
 
   render() {
-    const { cartItems, totalAmount } = this.state;
+    const { cartItems, totalAmount } = this.state
     return (
       <div>
         <NavBar />
@@ -159,6 +156,6 @@ export default class Cart extends Component {
           </table>
         </div>
       </div>
-    );
+    )
   }
 }

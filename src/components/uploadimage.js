@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from "react";
-import "./uploadstyle.css";
-import NavBar from "./navbar";
-import Dropzone from "react-dropzone";
-//import { toast } from 'react-hot-toast';
-import { Link } from "react-router-dom";
-import Alert from '@mui/material/Alert';
-import { Snackbar } from '@mui/material';
+import React, { useEffect, useState } from "react"
+import "./uploadstyle.css"
+import NavBar from "./navbar"
+import Dropzone from "react-dropzone"
+//import { toast } from 'react-hot-toast'
+import { Link } from "react-router-dom"
+import Alert from '@mui/material/Alert'
+import { Snackbar } from '@mui/material'
 
 export default function UploadImage() {
-  const [image, setImage] = useState("");
-  const [postDatas, setPostDatas] = useState();
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [items, setItems] = useState([]);
-  const [userId, setUserId] = useState("");
-  const [openAlert, setOpenAlert] = useState(false);
-  const [alertSeverity, setAlertSeverity] = useState("");
-  const [alertMessage, setAlertMessage] = useState("");
+  const [image, setImage] = useState("")
+  const [postDatas, setPostDatas] = useState()
+  const [title, setTitle] = useState("")
+  const [price, setPrice] = useState("")
+  const [description, setDescription] = useState("")
+  const [items, setItems] = useState([])
+  const [userId, setUserId] = useState("")
+  const [openAlert, setOpenAlert] = useState(false)
+  const [alertSeverity, setAlertSeverity] = useState("")
+  const [alertMessage, setAlertMessage] = useState("")
 
   useEffect(() => {
-    const storedUserId = window.localStorage.getItem("userId");
+    const storedUserId = window.localStorage.getItem("userId")
     if (storedUserId) {
-      setUserId(storedUserId);
+      setUserId(storedUserId)
       fetch(`http://localhost:5000/image/${storedUserId}`)
         .then((res) => res.json())
         .then((result) => {
-          const userProducts = result.filter((product) => product.sellerId === storedUserId);
-          setItems(result);
-        });
+          const userProducts = result.filter((product) => product.sellerId === storedUserId)
+          setItems(result)
+        })
     }
     fetch("http://localhost:5000/userData", {
       method: "POST",
@@ -44,36 +44,36 @@ export default function UploadImage() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "userData");
+        console.log(data, "userData")
         if (data.data === "token expired") {
-          alert("Token expired login again");
-          window.localStorage.clear();
-          window.location.href = "./signin";
+          alert("Token expired login again")
+          window.localStorage.clear()
+          window.location.href = "./signin"
         }
-      });
-  }, []);
+      })
+  }, [])
   const onDrop = (acceptedFiles) => {
-    setImage(acceptedFiles[0]);
-  };
+    setImage(acceptedFiles[0])
+  }
 
   const submitHandler = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (!image) {
-      showAlert('warning', 'Image required');
-      return;
+      showAlert('warning', 'Image required')
+      return
     }
     if (title.length < 3) {
-      showAlert('warning', 'Title is too short');
-      return;
+      showAlert('warning', 'Title is too short')
+      return
     }
-    const formData = new FormData();
-    formData.append('image', image);
-    formData.append('title', title);
-    formData.append('price', price);
-    formData.append('description', description);
+    const formData = new FormData()
+    formData.append('image', image)
+    formData.append('title', title)
+    formData.append('price', price)
+    formData.append('description', description)
   
     try {
-      const userId = window.localStorage.getItem('userId');
+      const userId = window.localStorage.getItem('userId')
   
       const response = await fetch('http://localhost:5000/image', {
         method: 'POST',
@@ -81,20 +81,20 @@ export default function UploadImage() {
         headers: {
           Authorization: `Bearer ${userId}`,
         },
-      });
+      })
       if (response.ok) {
-        const newImage = await response.json();
-        setPostDatas(newImage);
-        window.location.href = "./uploadimage";
-        showAlert('success', 'Upload completed');
+        const newImage = await response.json()
+        setPostDatas(newImage)
+        window.location.href = "./uploadimage"
+        showAlert('success', 'Upload completed')
       } else {
-        const errorResponse = await response.json();
-        throw new Error(errorResponse.msg); // ดึงข้อความของข้อผิดพลาดมาจาก response ของ server
+        const errorResponse = await response.json()
+        throw new Error(errorResponse.msg)
       }
     } catch (error) {
-      showAlert('error', error.message); // แสดง Alert ด้วยข้อความของข้อผิดพลาด
+      showAlert('error', error.message)
     }
-  };
+  }
   
   const deleteHandler = async (id) => {
     try {
@@ -106,33 +106,32 @@ export default function UploadImage() {
         body: JSON.stringify({
           sellerId: userId,
         }),
-      });
+      })
 
       if (response.ok) {
-        // Remove the deleted image from the items list
-        setItems(items.filter((item) => item._id !== id));
-        showAlert("success", "Image deleted successfully");
+        setItems(items.filter((item) => item._id !== id))
+        showAlert("success", "Image deleted successfully")
       } else {
-        throw new Error("Failed to delete image");
+        throw new Error("Failed to delete image")
       }
 
-      console.log(response.status);
+      console.log(response.status)
     } catch (error) {
-      alert(error.message);
+      alert(error.message)
     }
-  };
+  }
   const showAlert = (severity, message) => {
-    setAlertSeverity(severity);
-    setAlertMessage(message);
-    setOpenAlert(true);
-  };
+    setAlertSeverity(severity)
+    setAlertMessage(message)
+    setOpenAlert(true)
+  }
 
   const handleCloseAlert = (event, reason) => {
     if (reason === 'clickaway') {
-      return;
+      return
     }
-    setOpenAlert(false);
-  };
+    setOpenAlert(false)
+  }
 
 
 
@@ -246,7 +245,7 @@ export default function UploadImage() {
         ))}
       </div>
     </div>
-  );
+  )
 
 
 }

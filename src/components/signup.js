@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import "./signin-signup_style.css";
+import React, { Component } from "react"
+import "./signin-signup_style.css"
 
 
 import Swal from 'sweetalert2'
@@ -9,20 +9,20 @@ const MySwal = withReactContent(Swal)
 
 export default class SignUp extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       username: "",
       fname: "",
       lname: "",
       email: "",
       password: "",
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleSubmit(e) {
-    e.preventDefault();
-    const { username, fname, lname, email, password } = this.state;
-    console.log(username, fname, lname, email, password);
+    e.preventDefault()
+    const { username, fname, lname, email, password } = this.state
+    console.log(username, fname, lname, email, password)
     fetch("http://localhost:5000/signup", {
       method: "POST",
       crossDomain: true,
@@ -41,7 +41,7 @@ export default class SignUp extends Component {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "userRegister");
+        console.log(data, "userRegister")
         if (data.status === "ok") {
           MySwal.fire({
             html: <strong>successful</strong>,
@@ -49,23 +49,20 @@ export default class SignUp extends Component {
             showConfirmButton: false,
             timer: 1000
           })
-          window.location.href = "./signin";
+          window.location.href = "./signin"
 
-          //alert("login successful");
+          //alert("login successful")
          
         } else {
           MySwal.fire({
             html: <strong>{data.status}</strong>,
             icon: 'error'
           })
-            //alert(data.status);
+            //alert(data.status)
         }
-        /*alert("Signup Successful");
-        window.location.href = "./login";*/
-
-
-
-      });
+        /*alert("Signup Successful")
+        window.location.href = "./login"*/
+      })
   }
   render() {
     return (
@@ -140,6 +137,6 @@ export default class SignUp extends Component {
         </div>
       </form>
     </div>
-    );
+    )
   }
 }

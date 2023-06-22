@@ -19,6 +19,7 @@
     "jsqr": "^1.4.0",
     "moment-timezone": "^0.5.43",
     "qrcode-decoder": "^0.3.3",
+    "quagga": "^0.12.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",

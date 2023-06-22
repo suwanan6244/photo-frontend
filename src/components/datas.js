@@ -16,6 +16,6 @@ const ImagesData = [
     description: "swwwwww",
   },
   
-];
+]
   
-  export default ImagesData;
+  export default ImagesData

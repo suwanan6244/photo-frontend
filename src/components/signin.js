@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import "./signin-signup_style.css";
+import React, { Component } from "react"
+import "./signin-signup_style.css"
 
 
 import Swal from 'sweetalert2'
@@ -10,17 +10,17 @@ const MySwal = withReactContent(Swal)
 export default class SignIn extends Component {
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       username: "",
       password: "",
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleSubmit(e) {
-    e.preventDefault();
-    const { username, password } = this.state;
-    console.log(username, password);
+    e.preventDefault()
+    const { username, password } = this.state
+    console.log(username, password)
 
     fetch("http://localhost:5000/signin", {
       method: "POST",
@@ -37,7 +37,7 @@ export default class SignIn extends Component {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "userRegister");
+        console.log(data, "userRegister")
         if (data.status === "ok") {
           MySwal.fire({
             html: <strong>successful</strong>,
@@ -45,19 +45,17 @@ export default class SignIn extends Component {
             showConfirmButton: false,
             timer: 1000
           })
-          //alert("login successful");
-          window.localStorage.setItem("token", data.data);
-          window.localStorage.setItem("userId", data.userId);
-          window.localStorage.setItem("loggedIn", true);
-          window.location.href = "./home";
+          window.localStorage.setItem("token", data.data)
+          window.localStorage.setItem("userId", data.userId)
+          window.localStorage.setItem("loggedIn", true)
+          window.location.href = "./home"
         } else {
           MySwal.fire({
             html: <strong>{data.status}</strong>,
             icon: 'error'
           })
-            //alert(data.status);
         }
-      });
+      })
   }
   render() {
     return (
@@ -113,9 +111,6 @@ export default class SignIn extends Component {
         </div>
       </form>
     </div>
-
-
-
-    );
+    )
   }
 }

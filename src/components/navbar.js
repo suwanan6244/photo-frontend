@@ -1,28 +1,28 @@
-import React, { Component } from "react";
-import "./navbarstyle.css";
+import React, { Component } from "react"
+import "./navbarstyle.css"
 
 export default class Navbar extends Component {
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       clicked: false,
       cartCount: 0,
-    };
+    }
   }
 
   updateCartCount = (count) => {
-    this.setState({ cartCount: count });
-  };
+    this.setState({ cartCount: count })
+  }
   
   handleClick = () =>{
     this.setState({clicked: !this.state.clicked})
   }
 
   logOut = () => {
-    window.localStorage.clear();
-    window.location.href = "/signin";
-  };
+    window.localStorage.clear()
+    window.location.href = "/signin"
+  }
   
     
   render() {
@@ -68,6 +68,6 @@ export default class Navbar extends Component {
 
     </nav>
 
-    );
+    )
   }
 }

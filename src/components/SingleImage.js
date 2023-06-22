@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from "react";
-import NavBar from "./navbar";
-import { useParams } from "react-router-dom";
-import "./SingleImagestyle.css";
+import React, { useEffect, useState } from "react"
+import NavBar from "./navbar"
+import { useParams } from "react-router-dom"
+import "./SingleImagestyle.css"
 
 const SingleImage = () => {
-  const { id } = useParams();
-  const [product, setProduct] = useState({});
-  const [quantity, setQuantity] = useState(1);
-  const [userId, setUserId] = useState("");
-  const [purchasedProducts, setPurchasedProducts] = useState([]);
-  const [seller, setSeller] = useState({}); 
+  const { id } = useParams()
+  const [product, setProduct] = useState({})
+  const [quantity, setQuantity] = useState(1)
+  const [userId, setUserId] = useState("")
+  const [purchasedProducts, setPurchasedProducts] = useState([])
+  const [seller, setSeller] = useState({})
 
 
   useEffect(() => {
     const fetchData = async () => {
-      const productResponse = await fetch(`http://localhost:5000/allimage/${id}`);
-      const productData = await productResponse.json();
-      setProduct(productData);
+      const productResponse = await fetch(`http://localhost:5000/allimage/${id}`)
+      const productData = await productResponse.json()
+      setProduct(productData)
 
-      const sellerResponse = await fetch(`http://localhost:5000/user/${productData.sellerId}`);
-      const sellerData = await sellerResponse.json();
-      setSeller(sellerData);
-    };
-    fetchData();
+      const sellerResponse = await fetch(`http://localhost:5000/user/${productData.sellerId}`)
+      const sellerData = await sellerResponse.json()
+      setSeller(sellerData)
+    }
+    fetchData()
 
     if (userId) {
       fetch(`http://localhost:5000/checkout/${userId}`)
@@ -30,11 +30,11 @@ const SingleImage = () => {
         .then((result) => {
           const purchased = result.checkouts
             .flatMap((checkout) => checkout.products)
-            .map((product) => product.productId._id);
-          setPurchasedProducts(purchased);
-        });
+            .map((product) => product.productId._id)
+          setPurchasedProducts(purchased)
+        })
     }
-  }, [id, userId]);
+  }, [id, userId])
 
 
   const handleAddToCart = async () => {
@@ -49,14 +49,14 @@ const SingleImage = () => {
           productId: product._id,
           quantity,
         }),
-      });
-      const data = await response.json();
-      alert(data.message);
+      })
+      const data = await response.json()
+      alert(data.message)
     } catch (error) {
-      console.log(error);
-      alert("Error adding product to cart");
+      console.log(error)
+      alert("Error adding product to cart")
     }
-  };
+  }
 
   return (
     <div>
@@ -87,7 +87,7 @@ const SingleImage = () => {
                   className={purchasedProducts.includes(product._id) ? "Purchased-round-black-btn" : "round-black-btn"}
                   onClick={() => {
                     if (!purchasedProducts.includes(product._id)) {
-                      handleAddToCart(product._id);
+                      handleAddToCart(product._id)
                     }
                   }}
                   disabled={purchasedProducts.includes(product._id)}
@@ -100,7 +100,7 @@ const SingleImage = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SingleImage;
+export default SingleImage
